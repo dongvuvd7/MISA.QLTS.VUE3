@@ -1,0 +1,46 @@
+.pagination {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+}
+
+.page-item {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.btn-prev-page {
+    margin-left: 25px;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+
+.btn-next-page {
+    margin-left: 10px;
+    border-radius: 3px;
+}
+
+.btn-prev-page:hover,
+.btn-next-page:hover,
+.page-item:hover {
+    background-color: #f5f5f5;
+}
+
+.btn-prev-page,
+.btn-next-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.page-item.active {
+    font-weight: bold;
+    background-color: #f5f5f5;
+}

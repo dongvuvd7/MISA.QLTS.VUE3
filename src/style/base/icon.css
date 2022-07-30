@@ -1,0 +1,283 @@
+.icon-notification {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -332px -109px;
+  width: 16px;
+  height: 20px;
+}
+
+.icon-option {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -199px -23px;
+  width: 18px;
+  height: 18px;
+}
+
+.icon-help {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -67px -67px;
+  width: 18px;
+  height: 18px;
+}
+
+.icon-profile {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -23px -23px;
+  width: 18px;
+  height: 18px;
+}
+
+.icon-arrow-down {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -72px -338px;
+  width: 8px;
+  height: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.icon-arrow-up {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -28px -338px;
+  width: 8px;
+  height: 5px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.icon-double-arrow {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -204px -332px;
+  width: 8px;
+  height: 16px;
+}
+
+.icon-excel {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -287px -111px;
+  width: 18px;
+  height: 17px;
+  cursor: pointer;
+}
+
+.icon-delete {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -463px -111px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.icon-refresh {
+  background: url('../../assets/icon/Sprites.64af8f61.svg') no-repeat -1328px -312px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.icon-overview {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -21px -153px;
+  width: 22px;
+  height: 22px;
+}
+
+.icon-asset {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -65px -153px;
+  width: 22px;
+  height: 23px;
+}
+
+.icon-road {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -110px -153px;
+  width: 21px;
+  height: 23px;
+}
+
+.icon-tool {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -153px -153px;
+  width: 22px;
+  height: 22px;
+}
+
+.icon-category {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -197px -155px;
+  width: 22px;
+  height: 18px;
+}
+
+.icon-search {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -241px -153px;
+  width: 22px;
+  height: 22px;
+}
+
+.icon-report {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -329px -153px;
+  width: 22px;
+  height: 22px;
+}
+
+.active_item .icon-overview {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -22px -198px;
+  width: 20px;
+  height: 21px;
+}
+
+.active_item .icon-asset {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -65px -197px;
+  width: 22px;
+  height: 23px;
+}
+
+.active_item .icon-road {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -110px -197px;
+  width: 21px;
+  height: 22px;
+}
+
+.active_item .icon-tool {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -153px -197px;
+  width: 22px;
+  height: 22px;
+}
+
+.active_item .icon-category {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -198px -200px;
+  width: 20px;
+  height: 17px;
+}
+
+.active_item .icon-search {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -240px -196px;
+  width: 23px;
+  height: 23px;
+}
+
+.active_item .icon-report {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -330px -198px;
+  width: 20px;
+  height: 20px;
+}
+
+.icon-chevron-down {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -158px -293px;
+  width: 12px;
+  height: 7px;
+  position: absolute;
+  right: 10px;
+}
+
+.icon-chevron-down-black {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -158px -249px;
+  width: 11px;
+  height: 7px;
+}
+
+.icon-search-black {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -243px -23px;
+  width: 18px;
+  height: 18px;
+}
+
+.icon-filter {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -243px -69px;
+  width: 17px;
+  height: 16px;
+}
+
+.icon-x {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -375px -287px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.icon-edit {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -156px -68px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.icon-copy {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -244px -112px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.icon-calendar {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -287px -67px;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+.icon-warning {
+  background: url("../../assets/icon/Sprites.64af8f61.svg") no-repeat -598px -463px;
+  min-width: 36px;
+  height: 37px;
+}
+
+.icon-prev-page {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -29px -246px;
+  width: 7px;
+  height: 12px;
+}
+
+.icon-next-page {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -73px -246px;
+  width: 7px;
+  height: 12px;
+}
+
+.icon-green-check {
+  background: url("../../assets/icon/Sprites.64af8f61.svg") no-repeat -848px -312px;
+  width: 16px;
+  height: 16px;
+}
+
+.icon-horizontal {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -110px -420px;
+  width: 20px;
+  height: 15px;
+}
+
+.icon-vertical {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -22px -421px;
+  width: 20px;
+  height: 14px;
+}
+
+.icon-print {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -331px -67px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.icon-vertical-dot {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -383px -26px;
+  width: 3px;
+  height: 13px;
+  cursor: pointer;
+}
+
+.icon-maximize {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -245px -333px;
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+.icon-minimize {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -289px -333px;
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+.icon-plus {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -375px -419px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.icon-minus {
+  background: url("../../assets/icon/qlts-icon.svg") no-repeat -375px -463px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}

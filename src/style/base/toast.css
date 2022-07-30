@@ -1,0 +1,37 @@
+.toast-container {
+    height: 40px;
+    width: 250px;
+    background-color: #fff;
+    position: absolute;
+    bottom: 50px;
+    right: -250px;
+    border-radius: 4px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    animation: slide-in 4s linear;
+    z-index: 3;
+}
+
+.toast-icon {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+@keyframes slide-in {
+    0% {
+        right: -250px;
+    }
+
+    20% {
+        right: 20px;
+    }
+
+    80% {
+        right: 20px;
+    }
+
+    100% {
+        right: -250px;
+    }
+}

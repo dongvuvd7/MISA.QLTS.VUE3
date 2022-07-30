@@ -1,0 +1,20 @@
+:root {
+    --primary-color:  #1aa4c8;
+    --primary-color-hover: #0582a2;
+    --primary-color-active: #28b7dc;
+    --primary-color-focus: #4bb8d4;
+
+    --primary-color-item-hover: rgba(26, 165, 200, 0.2);
+
+    --bgr-btn-icon-color: #ffffff;
+    --bgr-btn-icon-color-hover: rgb(230, 230, 230);
+    --bgr-btn-icon-color-active: rgb(240, 240, 240);
+
+    --warning-color: #FF6900;
+    --warning-hover-color: #b54b00;
+    --danger-color: #F65454;
+    --danger-hover-color: #fd3e3e;
+    --info-color: #0075FF;
+    --btn-dialog-default-color: #e5e5e5;
+
+}

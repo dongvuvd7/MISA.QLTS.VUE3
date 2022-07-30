@@ -1,0 +1,37 @@
+/* Common */
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
+@import url("./common/common.css");
+@import url("./common/color.css");
+
+/* Base */
+@import url('./base/icon.css');
+@import url('./base/buttonicon.css');
+@import url('./base/buttontext.css');
+@import url('./base/combobox.css');
+@import url('./base/input.css');
+@import url('./base/loader.css');
+@import url('./base/pagination.css');
+@import url('./base/popup.css');
+@import url('./base/toast.css');
+@import url('./base/checkbox.css');
+
+/* Layout */
+@import url('./layout/menu.css');
+@import url('./layout/header.css');
+@import url('./layout/content.css');
+
+/* Module */
+@import url('./view/asset/assetList.css');
+@import url('./view/asset/assetTable.css');
+@import url('./view/asset/assetDetail.css');
+
+
+body {
+    font-family: Roboto, sans-serif;
+    font-size: 13px;
+    margin: 0;
+}
+
+body>div {
+    display: flex;
+}

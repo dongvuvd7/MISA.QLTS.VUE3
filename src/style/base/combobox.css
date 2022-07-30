@@ -1,0 +1,79 @@
+.base-combobox {
+    position: relative;
+}
+
+.base-combobox input {
+    width: 100% !important;
+    font-size: 13px;
+    padding-right: 35px;
+}
+
+.base-combobox .open-menu-button {
+    position: absolute;
+    top: 0;
+    height: 35px;
+    width: 35px;
+    cursor: pointer;
+    right: 0;
+}
+
+.base-combobox .open-menu-icon {
+    background: url('../../assets/icon/qlts-icon.svg') no-repeat -72px -338px;
+    width: 8px;
+    height: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.base-combobox .base-combobox-list {
+    background-color: #fff;
+    width: 100%;
+    max-height: 200px;
+    position: absolute;
+    top: 36px;
+    transition: 0.2s;
+    overflow-y: auto;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
+    z-index: 2;
+}
+
+.base-combobox .base-combobox-item {
+    height: 35px;
+    padding-left: 14px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    display: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.base-combobox-item .item-value {
+    min-width: 70px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.base-combobox-item .item-des {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    padding-left: 4px;
+}
+
+.base-combobox .base-combobox-item:hover {
+    background-color: var(--primary-color-item-hover);
+}
+
+.base-combobox .base-combobox-item.selected {
+    background-color: var(--primary-color-item-hover);
+}
+
+.base-combobox .base-combobox-item.hovered {
+    background-color: rgba(125, 228, 253, 0.2);
+}

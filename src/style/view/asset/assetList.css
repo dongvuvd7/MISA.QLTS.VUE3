@@ -1,0 +1,90 @@
+/* Content Top*/
+.content-top {
+    display: flex;
+    align-items: center;
+    margin: 15px 20px;
+    justify-content: space-between;
+}
+
+/* Content Top Left */
+.content-top-left {
+    display: flex;
+    align-items: center;
+}
+
+.content-top-left .base-input {
+    width: 180px;
+}
+
+.content-top-left .base-combobox {
+    margin-left: 10px;
+    width: 220px !important;
+}
+
+.content-top-left .base-combobox input::placeholder {
+    font-size: 13px;
+    color: #000;
+    font-style: normal;
+}
+
+.content-top-left .base-combobox input:focus::placeholder {
+    color: #fff;
+}
+
+/* Content Top Right */
+.content-top-right {
+    display: flex;
+    align-items: center;
+}
+
+.content-top-right .base-button-icon {
+    margin-left: 10px;
+}
+
+.content-top-right .base-button-text {
+    width: 110px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+}
+
+/* Content Main */
+.content-main {
+    height: calc(100vh - 111px);
+}
+
+/* ASSET LIST */
+.nav-item:nth-child(2){
+    background-color: var(--primary-color);
+}
+
+/* Button Excel expand */
+
+#btn-excel-tool:hover .excel-tool{
+    visibility: visible;
+}
+
+.excel-tool{
+    height: 80px;
+    width: 80px;
+    top: 36px;
+    position: absolute;
+    z-index: 4;
+    background-color: #fff;
+    border-radius: 3px;
+    visibility: hidden;
+}
+    .excel-tool-item{
+        height: 38px;
+        width: 80px;
+        /* border: 1px solid #1aa4c8; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #1aa4c8;
+        border-radius: 3px;
+        /* box-shadow: 0 2px 6px rgb(0 0 0 / 16%); */
+        border-top: 1px solid #eaeaea;
+        cursor: pointer;
+    }
+    .excel-tool-item:hover{
+        background-color: rgba(26, 164, 200, 0.2);
+    }
