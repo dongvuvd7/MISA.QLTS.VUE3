@@ -58,7 +58,7 @@ const store = createStore({
                         password: user.password,
                     },
                     {
-                        withCredentials: false,
+                        withCredentials: true,
                         headers: {
                             "Content-Type": "application/json",
                         },
@@ -82,7 +82,9 @@ const store = createStore({
          */
         async logout({ commit }) {
             await commit("logout");
-            await axios.get("https://localhost:44383/api/v1/User");
+            await axios.get("https://localhost:44307/api/v1/User", {
+                withCredentials: true,
+            });
         },
     },
     plugins: [createPersistedState()],

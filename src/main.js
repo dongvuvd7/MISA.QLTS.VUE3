@@ -6,7 +6,7 @@ import store from './store/store'
 import router from './router/routes'
 import axios from 'axios'
 //
-axios.defaults.withCredentials = false;
+axios.defaults.withCredentials = true;
 
 
 import { configureCompat } from 'vue'
