@@ -5,8 +5,25 @@ import App from './App.vue'
 import store from './store/store'
 import router from './router/routes'
 import axios from 'axios'
-//
+
+//chỉ định có thực hiện các request cross-site Access-Control sử dụng credential (cookie authen) hay không
 axios.defaults.withCredentials = true;
+
+//Cookie Authentication hết hạn thì logout và chuyển về login
+axios.interceptors.response.use(
+    response => {
+        return response;
+    }
+    , error => {
+        if (error.response.status === 404) {
+          store.dispatch("logout");
+          return router.push("/");
+          
+        }
+        return Promise.reject(error);
+    }
+);
+
 
 
 import { configureCompat } from 'vue'

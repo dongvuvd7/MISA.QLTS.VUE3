@@ -11,19 +11,22 @@ const store = createStore({
     },
     mutations: {
         /**
-         * Mô tả: Set lại user
+         * Set trạng thái cho user
+         * Created by: VDDong (01/08/2022)
          */
         setUser(state, username) {
             state.user = username;
         },
         /**
-         * Mô tả: Hàm đăng xuất, xóa user trên store
+         * Đăng xuất, Set trạng thái user thành null
+         * Created by: VDDong (01/08/2022)
          */
         logout(state) {
             state.user = null;
         },
         /**
-         * Mô tả: Set trạng thái có sai mật khẩu hay không
+         * Set trạng thái có sai mật khẩu hay không
+         * Created by: VDDong (01/08/2022)
          */
         setWrongPass(state, isWrongPass) {
             state.wrongPass = isWrongPass;
@@ -31,13 +34,15 @@ const store = createStore({
     },
     getters: {
         /**
-         * Mô tả: Hàm kiểm tra authen hay chưa bằng cách so sánh user
+         * Hàm kiểm tra đã đăng nhập hay chưa
+         * Created by: VDDong (01/08/2022)
          */
         isAuthentication(state) {
             return !!state.user;
         },
         /**
-         * Mô tả: Check và lấy ra xem mật khẩu có đang sai hay không
+         * Hàm kiểm tra có sai mật khẩu hay không
+         * Created by: VDDong (01/08/2022)
          */
         isWrongPass(state) {
             return state.wrongPass;
@@ -45,8 +50,10 @@ const store = createStore({
     },
     actions: {
         /**
-         * Mô tả: Hàm thực hiện login ở vuex với user được commit lên
-         * @param user (FormData), commit
+         * Hàm thực hiện login:
+         * - Đúng account: Set trạng thái cho user để xác nhận đã đăng nhập
+         * - Sai account: Set trạng thái sai mật khẩu
+         * Created by: VDDong (01/08/2022)
          */
         async login({ commit }, user) {
             // var me = this;
@@ -78,7 +85,7 @@ const store = createStore({
                 });
         },
         /**
-         * Mô tả: Hàm đăng xuất, call api xóa cookie
+         * Hàm thực hiện đăng xuất: Xóa cookie authen
          */
         async logout({ commit }) {
             await commit("logout");
