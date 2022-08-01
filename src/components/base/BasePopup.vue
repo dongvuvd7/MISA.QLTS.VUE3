@@ -135,12 +135,17 @@ export default {
             .classList.add("error-input");
         } else if (this.text.find((item) => item.includes("Tên tài sản"))) {
           //change error message of m-input-assetName
-          document.querySelector(".m-input-assetName + .error-msg").innerHTML =
-            this.text.find((item) => item.includes("Tên tài sản"));
-          //add class error-input to input asset name
-          document
-            .querySelectorAll(".m-input-assetName")[0]
-            .classList.add("error-input");
+          if (document.querySelector(".m-input-assetName + .error-msg")) {
+            document.querySelector(
+              ".m-input-assetName + .error-msg"
+            ).innerHTML = this.text.find((item) =>
+              item.includes("Tên tài sản")
+            );
+            //add class error-input to input asset name
+            document
+              .querySelectorAll(".m-input-assetName")[0]
+              .classList.add("error-input");
+          }
         } else {
           //remove class error-input to input asset code
           if (document.querySelectorAll(".m-input-assetCode").length != 0)

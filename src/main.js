@@ -8,19 +8,6 @@ import axios from 'axios'
 //
 axios.defaults.withCredentials = true;
 
-// Xử lý lỗi Authen khi F5
-axios.interceptors.response.use(undefined, function(error) {
-  if (error) {
-    const originalRequest = error.config;
-    if (error.response.status === 404 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      store.dispatch("logout");
-      return router.push("/");
-    }
-  }
-});
-//
-
 
 import { configureCompat } from 'vue'
 configureCompat({

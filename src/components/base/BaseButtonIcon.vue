@@ -306,7 +306,7 @@ export default {
             countSuccess = response.data.recordsInserted;
             noticeMsgList = noticeMsgList.concat(response.data.errorMsgs);
             me.$emit("loadData");
-            bus.$emit("hightLightRow", response.data.successRecordsCode, 30000);
+            // bus.$emit("hightLightRow", response.data.successRecordsCode, 30000);
           })
           .catch((error) => {
             console.log(error, "error");
