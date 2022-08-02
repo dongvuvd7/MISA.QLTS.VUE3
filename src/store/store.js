@@ -1,6 +1,7 @@
 import axios from "axios";
 import createPersistedState from "vuex-persistedstate";
 import { createStore } from "vuex";
+import Resources from "../components/common/resource.js";
 
 const store = createStore({
     state() {
@@ -59,7 +60,7 @@ const store = createStore({
             // var me = this;
             await axios
                 .post(
-                    "https://localhost:44307/api/v1/User",
+                    Resources.API.Loginlogout,
                     {
                         username: user.username,
                         password: user.password,
@@ -89,7 +90,7 @@ const store = createStore({
          */
         async logout({ commit }) {
             await commit("logout");
-            await axios.get("https://localhost:44307/api/v1/User", {
+            await axios.get(Resources.API.Loginlogout, {
                 withCredentials: true,
             });
         },

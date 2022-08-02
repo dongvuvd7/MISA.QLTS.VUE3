@@ -12,6 +12,7 @@ const Resource = {
         GetAssetCategoryByName: "https://localhost:44307/api/v1/AssetCategories/AssetCategoryName?entityName=",
         GetDepartmentByName: "https://localhost:44307/api/v1/Departments/DepartmentName?entityName=",
         AssetMultiplePost: "https://localhost:44307/api/v1/Assets/MultiplePost",
+        Loginlogout: "https://localhost:44307/api/v1/User",
 
 
     },
