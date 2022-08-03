@@ -87,6 +87,7 @@ const store = createStore({
         },
         /**
          * Hàm thực hiện đăng xuất: Xóa cookie authen
+         * Created by: VDDong (03/08/2022)
          */
         async logout({ commit }) {
             await commit("logout");

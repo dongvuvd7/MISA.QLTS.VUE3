@@ -118,7 +118,8 @@ export default {
         },
 
         /**
-         * 
+         * Nhấn nút đăng nhập
+         * Created by: VDDong (03/08/2022)
          */
         async submit() {
             if(this.validateRequired()){
@@ -145,6 +146,7 @@ export default {
 
         /**
          * Validate required username and password
+         * Created by: VDDong (03/08/2022)
          */
         validateRequired() {
             // get username and password
@@ -178,6 +180,7 @@ export default {
 
         /**
          * Focus input then remove class input-warning
+         * Created by: VDDong (03/08/2022)
          */
         turnOffWarning(file) {
             document.getElementById(file).classList.remove("input-warning");
@@ -186,6 +189,7 @@ export default {
 
         /**
          * Hiển thị snackbar
+         * Created by: VDDong (03/08/2022)
          */
         showSnackbar(text) {
             // set html text for snackbar
