@@ -248,7 +248,7 @@
                 format="DD/MM/YYYY"
                 :editable="true"
                 :clearable="false"
-                :disabled-date="disabledAfterToday"
+                :disabled-date="disabledAfterTodayAndBeforePurchaseDate"
               ></date-picker>
               <div class="date-icon">
                 <div class="input-icon icon-calendar"></div>
@@ -462,6 +462,9 @@ export default {
      */
     disabledAfterToday(date) {
       return date > new Date();
+    },
+    disabledAfterTodayAndBeforePurchaseDate(date) {
+      return date > new Date() || date < new Date(this.asset.purchaseDate);
     },
 
     /**

@@ -55,7 +55,7 @@
           </div>
         </div>
       </div>
-      <div class="copy-right">Copyright © 2020 MISA JSC</div>
+      <div class="copy-right">Copyright © 2022 MISA JSC</div>
     </div>
     <div id="snackbar" class="" style="margin-left: -129.056px; top: 52px">
       Vui lòng nhập đầy đủ thông tin đăng nhập
