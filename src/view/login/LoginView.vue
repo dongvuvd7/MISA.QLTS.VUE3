@@ -127,7 +127,7 @@ export default {
                     username: this.account.username,
                     password: this.account.password,
                 };
-                console.log(user);
+                // console.log(user);
                 //request to server
                 await this.login(user);
                 // if login success

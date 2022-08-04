@@ -43,9 +43,21 @@ const routes = [
             }
         }
     },
+    {
+        path: '/login',
+        name: 'loginPage',
+        component: LoginView,
+        beforeEnter: (to, from, next) => {
+            if (store.getters.isAuthentication) {
+                next({ name: 'asset' })
+            } else {
+                next()
+            }
+        }
+    },
     //Nếu path không tồn tại thì chuyển về login
     {
-        path: '/*',
+        path: '/:pathMatch(.*)*',
         name: 'unknown',
         component: LoginView,
         beforeEnter: (to, from, next) => {
