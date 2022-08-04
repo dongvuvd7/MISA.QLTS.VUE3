@@ -631,6 +631,8 @@ export default {
 
       /* Call API xử lý thêm mới hoặc sửa */
       if (valid) {
+        //trim các khoảng trắng ở đầu và cuối chuỗi
+        me.asset.assetCode = me.asset.assetCode.trim();
         if (me.formMode == Enums.FormMode.Edit) {
           // debugger;
           //Nếu formMode là sửa thì gọi api sửa dữ liệu
