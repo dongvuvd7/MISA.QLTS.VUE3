@@ -1,19 +1,28 @@
 const Resource = {
     API: {
-        GetAssetById: "https://localhost:44307/api/v1/Assets/",
-        GetAssetsFilter: "https://localhost:44307/api/v1/Assets/Filter?searchText=",
-        GetAssetsFilters: "https://localhost:44307/api/v1/Assets/Filters?searchText=",
-        GetDepartments: "https://localhost:44307/api/v1/Departments",
-        GetAssetCategories: "https://localhost:44307/api/v1/AssetCategories",
-        DeleteAsset: "https://localhost:44307/api/v1/Assets?entityIds=",
-        GetNewAssetCode: "https://localhost:44307/api/v1/Assets/NewCode",
-        GetExportExcel: "https://localhost:44307/api/v1/Assets/ExportExcel",
+        GetAssetById: "https://localhost:44309/api/v1/Assets/",
+        GetAssetsFilter: "https://localhost:44309/api/v1/Assets/Filter?searchText=",
+        GetAssetsFilters: "https://localhost:44309/api/v1/Assets/Filters?searchText=",
+        GetDepartments: "https://localhost:44309/api/v1/Departments",
+        GetAssetCategories: "https://localhost:44309/api/v1/AssetCategories",
+        DeleteAsset: "https://localhost:44309/api/v1/Assets?entityIds=",
+        GetNewAssetCode: "https://localhost:44309/api/v1/Assets/NewCode",
+        GetExportExcel: "https://localhost:44309/api/v1/Assets/ExportExcel",
 
-        GetAssetCategoryByName: "https://localhost:44307/api/v1/AssetCategories/AssetCategoryName?entityName=",
-        GetDepartmentByName: "https://localhost:44307/api/v1/Departments/DepartmentName?entityName=",
-        AssetMultiplePost: "https://localhost:44307/api/v1/Assets/MultiplePost",
-        Loginlogout: "https://localhost:44307/api/v1/User",
+        GetAssetCategoryByName: "https://localhost:44309/api/v1/AssetCategories/AssetCategoryName?entityName=",
+        GetDepartmentByName: "https://localhost:44309/api/v1/Departments/DepartmentName?entityName=",
+        AssetMultiplePost: "https://localhost:44309/api/v1/Assets/MultiplePost",
+        Loginlogout: "https://localhost:44309/api/v1/User",
 
+        /* API phần Ghi tăng tài sản */
+        GetLicenseFilter: "https://localhost:44309/api/v1/License/Filter?searchText=",
+        GetLicenseById: "https://localhost:44309/api/v1/License/",
+        PostLicense: "https://localhost:44309/api/v1/License",
+        GetAssetsByLicenseId: "https://localhost:44309/api/v1/Assets/GetByLicenseId/",
+        GetLicenseDetailByLicenseId: "https://localhost:44309/api/v1/LicenseDetail?licenseId=",
+        GetNewLicenseCode: "https://localhost:44309/api/v1/License/NewCode",
+        GetCostSource: "https://localhost:44309/api/v1/CostSource",
+        DeleteLicenseByIds: "https://localhost:44309/api/v1/License?entityIds=",
 
     },
 

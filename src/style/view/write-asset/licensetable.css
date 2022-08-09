@@ -1,0 +1,104 @@
+  /* Table */
+  table#tblLicense {
+    width: 100%;
+    height: 100%;
+    border-spacing: 0;
+}
+
+table#tblLicense tbody {
+    height: 100%;
+}
+
+/* Thead */
+table#tblLicense tr td,
+#tblLicense thead tr th {
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+table#tblLicense tr td:first-child,
+#tblLicense thead tr th:first-child {
+    padding-left: 16px;
+    padding-top: 12px;
+}
+
+table#tblLicense tr input {
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+}
+
+/* Tbody */
+#tblLicense tbody tr {
+    height: 40px;
+    cursor: pointer;
+    background-color: #fff;
+    user-select: none;
+}
+
+#tblLicense tbody tr:hover {
+    background-color: rgba(26, 165, 200, 0.2);
+}
+
+#tblLicense tbody tr:hover .function-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#tblLicense thead tr th {
+    background-color: #f5f5f5;
+    z-index: 1;
+    position: sticky;
+    top: 0px;
+    border-bottom: 1px solid #ccc;
+}
+
+#tblLicense .selected-row {
+    background-color: rgba(26, 164, 200, 0.2);
+}
+
+#tblLicense .function-container {
+    display: none;
+}
+
+/* Tfoot */
+#tblLicense tfoot tr td {
+    padding-top: 6px !important;
+    padding-bottom: 8px;
+}
+
+#tblLicense tfoot tr td {
+    background-color: #fff;
+    z-index: 1;
+    position: sticky;
+    bottom: -1px;
+    border-top: 1px solid #e5e5e5;
+}
+#tblLicense tfoot tr:first-child td {
+    background-color: #f5f5f5;
+    border-top: 1px solid #e5e5e5;
+}
+
+#tblLicense .table-footer-left {
+    display: flex;
+    align-items: center;
+}
+
+#tblLicense #pageSize {
+    outline: unset;
+    width: 50px;
+    height: 24px;
+    border: 1px solid #afafaf;
+    border-radius: 4px;
+    margin-left: 30px;
+    -webkit-appearance: menulist;
+}
+
+/* Input tìm kiếm chứng từ */
+.table-wrapper-top .base-input {
+    width: 280px;
+}

@@ -2,6 +2,8 @@ import AssetList from "../view/asset/AssetList.vue";
 import GeneralTemplate from "../view/general/General.vue";
 import LoginView from "../view/login/LoginView.vue";
 
+import LicenseList from "../view/write-asset/LicenseList.vue";
+
 import { createRouter, createWebHistory } from "vue-router";
 
 import store from "../store/store";
@@ -25,6 +27,14 @@ const routes = [
         component: GeneralTemplate,
         meta: { requiresAuth: true },
     },
+    
+    {
+        path:"/write-asset",
+        name: "writeAsset",
+        component: LicenseList,
+        meta: { requiresAuth: true },
+    },
+
     {
         path: "/login",
         name: "loginPage",

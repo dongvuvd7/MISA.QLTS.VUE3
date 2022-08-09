@@ -11,13 +11,57 @@
           <div class="nav-text" v-if="expand">Tổng quan</div>
         </router-link>
       </div>
-      <div class="nav-item" style="opacity: 1;">
+      <div class="nav-item" style="opacity: 1;" @click="turnSubMenu()">
         <router-link to="/asset">
           <div class="icon-asset"></div>
           <div class="nav-text" v-if="expand">Tài sản</div>
           <div class="icon-chevron-down" v-if="expand"></div>
         </router-link>
       </div>
+
+      <div class="sub-menu" v-if="expand && expandSubMenu">
+        <div class="sub-menu-item">
+          <router-link to="/write-asset">
+            <div class="nav-text" v-if="expand">Ghi tăng</div>
+          </router-link>
+        </div>
+        <div class="sub-menu-item">
+          <router-link to="/#">
+            <div class="nav-text" v-if="expand">Thay đổi thông tin</div>
+          </router-link>
+        </div>
+        <div class="sub-menu-item">
+          <router-link to="/#">
+            <div class="nav-text" v-if="expand">Đánh giá lại</div>
+          </router-link>
+        </div>
+        <div class="sub-menu-item">
+          <router-link to="/#">
+            <div class="nav-text" v-if="expand">Tính hao mòn</div>
+          </router-link>
+        </div>
+        <div class="sub-menu-item">
+          <router-link to="/#">
+            <div class="nav-text" v-if="expand">Điều chuyển tài sản</div>
+          </router-link>
+        </div>
+        <div class="sub-menu-item">
+          <router-link to="/#">
+            <div class="nav-text" v-if="expand">Ghi giảm</div>
+          </router-link>
+        </div>
+        <div class="sub-menu-item">
+          <router-link to="/#">
+            <div class="nav-text" v-if="expand">Kiểm kê</div>
+          </router-link>
+        </div>
+        <div class="sub-menu-item">
+          <router-link to="/#">
+            <div class="nav-text" v-if="expand">Khác</div>
+          </router-link>
+        </div>
+      </div>
+
       <div class="nav-item">
         <a>
           <div class="icon-road"></div>
@@ -66,10 +110,17 @@ export default {
   data() {
     return {
       expand: false, // mở rộng/thu gọn menu (ban đầu là thu gọn)
+      expandSubMenu: true, //mở rộng/thu gọn menu con
     };
   },
 
   methods: {
+    /**
+     * 
+     */
+    turnSubMenu() {
+      this.expandSubMenu = !this.expandSubMenu;
+    },
 
   },
 };

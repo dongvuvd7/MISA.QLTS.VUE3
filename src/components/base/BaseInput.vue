@@ -22,6 +22,7 @@
         'm-input-depreciationRate-lifeTime':
           fieldName == 'depreciationRate' || fieldName == 'lifeTime',
         'm-input-search-assets': fieldName == 'searchAssets',
+        'm-input-search-licenses': fieldName == 'searchLicenses',
       }"
       :disabled="disabled"
       :style="{ 'text-align': textAlign }"
@@ -230,15 +231,15 @@ export default {
         //Nếu fileldName là depreciationRate thì chỉ cho nhập số và dấu ,
         if (
           charCodeFieldDepreciationRate > 31 &&
-          (charCodeFieldDepreciationRate < 48 || charCodeFieldDepreciationRate > 57) &&
+          (charCodeFieldDepreciationRate < 48 ||
+            charCodeFieldDepreciationRate > 57) &&
           charCodeFieldDepreciationRate !== 44
         ) {
           evt.preventDefault();
         } else {
           return true;
         }
-      } 
-      else if (this.formatNumber) {
+      } else if (this.formatNumber) {
         //Nếu là các trường số khác thì chỉ cho nhập số
         evt = evt ? evt : window.event;
         var charCode = evt.which ? evt.which : evt.keyCode;
@@ -252,7 +253,6 @@ export default {
           return true;
         }
       }
-
     },
 
     /**
@@ -302,14 +302,20 @@ export default {
      * Bấm enter thì mới search tài sản (chỉ dùng cho input search
      * Created by: VDDong (28/07/2022)
      */
-    onEnter(){
-      if(this.fieldName == "searchAssets"){
+    onEnter() {
+      if (this.fieldName == "searchAssets") {
         //Lấy giá trị từ ô input
         let value = document.getElementsByClassName("m-input-search-assets")[0].value;
         this.$emit("searching", value);
       }
+      if (this.fieldName == "searchLicenses") {
+        //Lấy giá trị từ ô input
+        let value = document.getElementsByClassName(
+          "m-input-search-licenses"
+        )[0].value;
+        this.$emit("searching", value);
+      }
     },
-
   },
 };
 </script>
