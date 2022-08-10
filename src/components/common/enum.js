@@ -14,7 +14,7 @@ const Enum = {
         ValidateError: "validateError",
         DeleteFromMenuContext: "deleteFromMenuContext",
         AddRecordsFromExcel: "addRecordsFromExcel",
-
+        DeleteLicense: "deleteLicense",
     }
     
 };

@@ -1,0 +1,134 @@
+#licenseDetail .dialog {
+    height: 700px;
+    width: 1000px;
+}
+
+#licenseDetail .dialog-body {
+    height: calc(100% - 52px);
+}
+
+#licenseDetail .dialog {
+    height: 700px;
+    width: 1000px;
+}
+
+#licenseDetail .dialog-body {
+    height: calc(100% - 52px);
+}
+
+#licenseDetail .dialog-content {
+    background-color: #f4f7ff;
+    height: calc(100% - 72px);
+}
+
+#licenseDetail .dialog-body {
+    padding: 0px;
+}
+
+#licenseDetail .dialog-title {
+    padding: 24px 16px;
+    margin: 0;
+    font-size: 20px;
+}
+
+#licenseDetail .dialog-content-top {
+    padding: 16px;
+}
+
+#licenseDetail .dialog-top-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#licenseDetail .dialog-top-content {
+    width: 100%;
+    background-color: #fff;
+    padding: 16px;
+}
+
+#licenseDetail .dialog-content-bot {
+    padding: 16px;
+    padding-top: 0;
+    height: calc(100% - 221px);
+}
+
+#licenseDetail .dialog-bot-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#licenseDetail .dialog-bot-content {
+    width: 100%;
+    background-color: #fff;
+    height: calc(100% - 29px);
+}
+
+#licenseDetail .dialog-table-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+#licenseDetail .dialog-table-header .base-input {
+    width: 300px;
+}
+
+#licenseDetail .dialog-table-header .base-button-text {
+    width: 120px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
+}
+
+#licenseDetail .table-wrapper-bottom {
+    height: 25vh;
+    background-color: #fff;
+    margin: 0 20px;
+    margin-top: 10px;
+}
+
+#licenseDetail .table-wrapper-bottom .table-wrapper {
+    margin: 0;
+    height: calc(100% - 49px);
+    border: unset;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#licenseDetail .table-wrapper {
+    margin: 0;
+    height: calc(100% - 65px);
+    border: unset;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#licenseDetail .content-top {
+    padding-top: 15px;
+}
+
+#licenseDetail .table-wrapper-bottom .content-top {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+
+#licenseDetail .dialog-content {
+    background-color: #f4f7ff;
+    height: calc(100% - 72px);
+}
+
+#licenseDetail .dialog-body {
+    padding: 0px;
+}
+
+#licenseDetail .dialog-title {
+    padding: 24px 16px;
+    margin: 0;
+    font-size: 20px;
+}
+
+#licenseDetail .mx-icon-calendar {
+    display: inline !important;
+    right: 10px;
+}

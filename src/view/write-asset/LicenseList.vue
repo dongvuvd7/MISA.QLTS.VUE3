@@ -16,7 +16,6 @@
     </div>
     <!-- Bảng hiện thị Danh sách chứng từ và tài sản tương ứng -->
     <div class="content-main">
-      <!--  -->
       <license-table
         :licenses="listLicenses"
         :totalRows="totalRecords"
@@ -29,6 +28,18 @@
         ref="table"
       />
     </div>
+
+    <!-- Form chi tiết thêm/sửa chứng từ -->
+    <license-detail 
+      v-if="showDialog"
+      :formMode="formMode"
+      :selectedId="selectedId"
+      @btnCancelOnClick="btnCancelOnClick"
+      @closeDialog="showDialog = false"
+      @validateError="showValidateError"
+      @loadData="loadData"
+      @showToast="showToastMessage"
+    />
 
     <!-- Popup cảnh báo -->
     <base-popup
@@ -63,6 +74,7 @@ import BasePopup from "../../components/base/BasePopup.vue";
 import BaseToast from "../../components/base/BaseToast.vue";
 
 import LicenseTable from "../write-asset/LicenseTable.vue";
+import LicenseDetail from "../write-asset/LicenseDetail.vue";
 
 export default {
   components: {
@@ -71,6 +83,8 @@ export default {
     BaseLoader,
     BasePopup,
     BaseToast,
+    LicenseDetail,
+
   },
 
   data() {
@@ -167,16 +181,64 @@ export default {
 
     /**
      * Click nút xóa Chứng từ
+     * Created by: VDDong (10/08/2022)
      */
     btnDeleteOnClick() {
-      console.log("btnDeleteOnClick");
+      //Đếm số bản ghi đã chọn
+      var count = this.$refs.table.countSelected;
+      //Lấy ra bản ghi (trong trường hợp chọn 1 bản ghi)
+      var license = this.$refs.table.selectedLicense;
+      //Nếu có chọn bản ghi để xóa
+      if(count > 0) {
+        var popupText;
+        if(count > 1){
+          //Xóa nhiều bản ghi
+          popupText = [
+            `${count} ` +
+              Resources.Notice.License_ConfirmMultiDelete,
+          ];
+        }
+        else {
+          //Xóa 1 bản ghi
+          popupText = [Resources.Notice.ConfirmSingleDelete + ` chứng từ có mã ${license.licenseCode}?`];
+        }
+        //Hiển thị popup
+        this.popupInfo.displayed = true;
+        this.popupInfo.text = popupText;
+        this.popupInfo.subBtn = false;
+        this.popupInfo.outlineBtn = true;
+        this.popupInfo.mainBtnText = Resources.TextBtn.Delete;
+        this.popupInfo.outlineBtnText = Resources.TextBtn.No;
+        this.popupInfo.action = Enums.Action.DeleteLicense;
+      }
     },
 
     /**
      * Click nút hủy ở dialog detail Chứng từ
+     * Created by: VDDong (10/08/2022)
      */
     btnCancelOnClick(action) {
-      console.log(action + "btnCancelOnClick");
+      if(action == Enums.Action.Put){
+        this.popupInfo.displayed = true;
+        this.popupInfo.text = [
+          Resources.Notice.ConfirmCancelEdit,
+        ];
+        this.popupInfo.subBtn = true;
+        this.popupInfo.outlineBtn = true;
+        this.popupInfo.mainBtnText = Resources.TextBtn.Save;
+        this.popupInfo.subBtnText = Resources.TextBtn.DontSave;
+        this.popupInfo.outlineBtnText = Resources.TextBtn.Cancel;
+        this.popupInfo.action = "put-license";
+      }
+      else {
+        this.popupInfo.displayed = true;
+        this.popupInfo.text = [Resources.Notice.License_ConfirmCancelAdd];
+        this.popupInfo.subBtn = false;
+        this.popupInfo.outlineBtn = true;
+        this.popupInfo.mainBtnText = Resources.TextBtn.Cancel;
+        this.popupInfo.outlineBtnText = Resources.TextBtn.No;
+        this.popupInfo.action = "post-license";
+      }
     },
 
     /**

@@ -120,6 +120,21 @@ export default {
         bus.$emit("solveAddRecordsFromExcel");
         this.$emit("closePopup");
       }
+      //Nếu xóa (các) bản ghi License thì emit event deleteLicense
+      else if (this.action == Enums.Action.DeleteLicense) {
+        bus.$emit("deleteLicenses");
+        this.$emit("closePopup");
+      }
+      //Nếu đang sửa dữ liệu License thì lưu lại
+      else if (this.action == "put-license") {
+        bus.$emit("saveDataLicense"); //bus đang khai báo 2 saveData(asset, license): đang để trùng tên không thấy vấn đề gì, nhưng nên tách riêng ra 2 hàm khác nhau cho đỡ trùng
+        this.$emit("closePopup");
+      }
+      //Nếu đang khai báo License mới thì huỷ khai báo
+      else if (this.action == "post-license") {
+        this.$emit("closeDialog");
+        this.$emit("closePopup");
+      }
       //Đóng popup
       else {
         //action thông báo nội dung validate

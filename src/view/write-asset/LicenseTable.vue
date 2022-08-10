@@ -302,7 +302,7 @@ export default {
 
   created() {
     //Khai báo sự kiện deleteLicenses tại bus
-    bus.$on("delete", this.deleteLicenses);
+    bus.$on("deleteLicenses", this.deleteLicenses);
   },
 
   updated() {
@@ -450,7 +450,19 @@ export default {
      * Thực thi xóa dữ liệu
      */
     deleteLicenses() {
+      var me = this;
+      //Khởi tạo mảng chứa các id muốn xóa
+      var idToDelete = [];
+      //Nếu chứng từ có chọn checkbox thì thêm id chứng từ đó vào mảng muốn xóa
+      this.licenses.forEach((license) => {
+        if (license.selected) idToDelete.push(license.licenseId);
+      });
+      console.log(idToDelete, 'idToDelete[]');
+      //Call api xóa dữ liệu
 
+      //Reset biến đếm các bản ghi đã chọn checkbox
+      me.countSelected = 0;
+      console.log(me.countSelected, 'me.countSelected');
     },
 
 
