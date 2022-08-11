@@ -464,6 +464,7 @@ export default {
   methods: {
     /**
      * Lưu chứng từ khi thêm hoặc sửa
+     * Created by: VDDong (11/08/2022)
      */
     saveDataLicense() {
       //Validate chưa chọn tài sản nào
@@ -482,7 +483,7 @@ export default {
           assetId: asset.assetId, //Mã tài sản
           detail: asset.costDetail, //Chi tiết nguyên giá
         });
-        this.license.totalCost += asset.cost * asset.quantity; //Tổng nguyên giá = Tổng (giá tài sản * số lượng)
+        this.license.totalCost += asset.cost; //Tổng nguyên giá = Tổng (giá các tài sản)
       });
       console.log("license before send to server: ", this.license);
 

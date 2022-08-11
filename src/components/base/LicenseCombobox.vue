@@ -131,14 +131,14 @@ export default {
   },
 
   watch: {
-    // selectedValue(value) {
-    //   this.selectedIndex = -1;
-    //   if (value == "") {
-    //     this.$emit("itemOnClick", "");
-    //   }
-    //   //Khi thay đổi giá trị được chọn thì validate
-    //   this.validate();
-    // },
+    selectedValue(value) {
+      this.selectedIndex = -1;
+      if (value == "") {
+        this.$emit("itemOnClick", "");
+      }
+      //Khi thay đổi giá trị được chọn thì validate
+      this.validate();
+    },
     showList() {
       this.selectedIndex = -1;
     },

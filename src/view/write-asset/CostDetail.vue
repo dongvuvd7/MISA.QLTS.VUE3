@@ -50,7 +50,8 @@
                   <input
                     type="text"
                     class="costsource-value-input"
-                    v-model="listSource[index].value"
+                    v-model.lazy="listSource[index].value"
+                    v-money="money"
                     style="text-align: right"
                   />
                 </v-col>
@@ -71,12 +72,6 @@
               <base-input :value="'Tổng'" :disabled="true" />
             </v-col>
             <v-col cols="4">
-              <!-- <base-input
-                :value="sumValueOfCostSource()"
-                :formatNumber="true"
-                :textAlign="'right'"
-                :disabled="true"
-              /> -->
               <input
                 type="text"
                 class="costsource-total-value-input"
@@ -113,6 +108,8 @@ import Resources from "../../components/common/resource.js";
 import BaseButtonText from "../../components/base/BaseButtonText.vue";
 import BaseInput from "../../components/base/BaseInput.vue";
 import LicenseCombobox from "../../components/base/LicenseCombobox.vue";
+
+ import {VMoney} from 'v-money'
 
 export default {
   components: {
@@ -156,8 +153,18 @@ export default {
       listSourceName: [], //Mảng danh sách tên các nguồn nguyên giá
       asset: {}, //Tài sản đang xem chi tiết nguyên giá
       showError: false, //Biến validate combobox (show lỗi hay không)
+
+      money: {
+          thousands: '.',
+          precision: 0,
+          masked: false /* doesn't work with directive */
+        },
+
+
     };
   },
+
+  directives: {money: VMoney},
 
   created() {
     var me = this;
@@ -236,7 +243,10 @@ export default {
     sumValueOfCostSource() {
       var total = 0;
       for (var i = 0; i < this.listSource.length; i++) {
-        total += +this.listSource[i].value;
+        console.log(this.listSource[i].value, 'value of listSource [' + i + "]");
+        //remove . from string
+        var value = this.listSource[i].value.toString().replace(/\./g, "");
+        total += +value;
       }
       return total;
     },
