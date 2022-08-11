@@ -10,13 +10,18 @@
       type="text"
       class="base-input"
       :placeholder="placeholder"
-      :class="{ 'input-with-icon': withIcon, 'error-input': error, 'm-input-required': required }"
+      :class="{
+        'input-with-icon': withIcon,
+        'error-input': error,
+        'm-input-required': required,
+      }"
       v-model="selectedValue"
       :required="required"
       @keyup="inputOnKeyUp"
       @click="showList = !showList"
       @blur="hideComboboxList()"
-
+      :indexSpec="indexSpec"
+      :valueName="selectedValue"
     />
 
     <!-- Text thông báo lỗi -->
@@ -36,7 +41,7 @@
         class="base-combobox-item"
         v-for="(item, index) in items"
         :key="item.id"
-        @click="itemOnClick(item.id, item.value, item.des)"
+        @click="itemOnClick(item.value)"
         :class="{
           selected: item.value == selectedValue,
           hovered: index == selectedIndex,
@@ -46,7 +51,9 @@
         @mouseleave="leaveClick()"
       >
         <div class="item-value" :title="item.value">{{ item.value }}</div>
-        <div class="item-des" v-if="item.des != null" :title="item.des">{{ item.des }}</div>
+        <div class="item-des" v-if="item.des != null" :title="item.des">
+          {{ item.des }}
+        </div>
       </div>
     </div>
   </div>
@@ -74,10 +81,7 @@ export default {
       default: null,
     },
     //Giá trị ban đầu
-    value: {
-      type: String,
-      default: "",
-    },
+    value: {},
     //Các item
     items: {
       type: Array,
@@ -103,6 +107,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    indexSpec: {
+      type: Number,
+      default: -1,
+    },
   },
 
   data() {
@@ -116,27 +124,21 @@ export default {
   },
 
   created() {
-    console.log(this.value, " ", typeof(this.value));
     //Gán giá trị ở ô input là giá trị của prop value
     this.selectedValue = this.value;
     //Bắt sự kiện validate từ bus
     bus.$on("validate", this.validate);
   },
 
-  updated() {
-    //Khi có thay đổi thì emit event updated cho component cha
-    this.$emit("updated", this.fieldName, this.selectedValue);
-  },
-
   watch: {
-    selectedValue(value) {
-      this.selectedIndex = -1;
-      if (value == "") {
-        this.$emit("itemOnClick", "", "");
-      }
-      //Khi thay đổi giá trị được chọn thì validate
-      this.validate();
-    },
+    // selectedValue(value) {
+    //   this.selectedIndex = -1;
+    //   if (value == "") {
+    //     this.$emit("itemOnClick", "");
+    //   }
+    //   //Khi thay đổi giá trị được chọn thì validate
+    //   this.validate();
+    // },
     showList() {
       this.selectedIndex = -1;
     },
@@ -151,7 +153,6 @@ export default {
   },
 
   methods: {
-
     /**
      * Khi di chuyển chuột vào các option
      * Created by: VDDong (09/07/2022)
@@ -182,7 +183,8 @@ export default {
      * CreatedBy: VDDong (13/07/2022)
      */
     displayed(value) {
-      return value.toLowerCase().includes(this.selectedValue.toLowerCase());
+      //   return value.toLowerCase().includes(this.selectedValue.toLowerCase());
+      return value;
     },
     /**
      * Đếm số item đang hiển thị
@@ -202,12 +204,11 @@ export default {
      * Click vào 1 item
      * CreatedBy: VDDong (13/07/2022)
      */
-    itemOnClick(id, value, des) {
+    itemOnClick(value) {
+      this.selectedValue = value;
       this.overClick = false;
       this.hideComboboxList();
-      // this.showList = false;
-      this.selectedValue = value;
-      this.$emit("itemOnClick", id, value, des); //emit event cho component cha
+      this.$emit("itemOnClick", this.selectedValue); //emit event cho component cha
     },
     /**
      * Nhấn các phím mũi tên và enter
@@ -237,22 +238,23 @@ export default {
         if (this.selectedIndex != -1) {
           //Gán vào selectedValue để đưa lên ô input
           this.selectedValue = this.items[this.selectedIndex].value;
-          var id = this.items[this.selectedIndex].id;
-          var value = this.items[this.selectedIndex].value;
-          var des = this.items[this.selectedIndex].des;
+          //   var id = this.items[this.selectedIndex].id;
+          //   var value = this.items[this.selectedIndex].value;
+          //   var des = this.items[this.selectedIndex].des;
           //Emit event itemOnClick cho component cha
-          this.$emit("itemOnClick", id, value, des);
+          this.$emit("itemOnClick", this.selectedValue);
         }
         //Đóng menu
         this.showList = false;
       }
 
       //scroll đến item đang chọn
-      const element = document.getElementsByClassName('base-combobox-item hovered');
+      const element = document.getElementsByClassName(
+        "base-combobox-item hovered"
+      );
       if (element.length > 0) {
-        element[0].scrollIntoView({ behavior: 'smooth' });
+        element[0].scrollIntoView({ behavior: "smooth" });
       }
-
     },
     /**
      * Điều hướng phím mũi tên item dưới/trên
@@ -262,18 +264,22 @@ export default {
       if (this.selectedIndex < this.items.length - 1) this.selectedIndex += 1;
       else this.selectedIndex = 0;
       //scroll đến item đang chọn
-      const element = document.getElementsByClassName('base-combobox-item hovered');
+      const element = document.getElementsByClassName(
+        "base-combobox-item hovered"
+      );
       if (element.length > 0) {
-        element[0].scrollIntoView({ behavior: 'smooth' });
+        element[0].scrollIntoView({ behavior: "smooth" });
       }
     },
     moveUp: function () {
       if (this.selectedIndex > 0) this.selectedIndex -= 1;
       else this.selectedIndex = this.items.length - 1;
       //scroll đến item đang chọn
-      const element = document.getElementsByClassName('base-combobox-item hovered');
+      const element = document.getElementsByClassName(
+        "base-combobox-item hovered"
+      );
       if (element.length > 0) {
-        element[0].scrollIntoView({ behavior: 'smooth' });
+        element[0].scrollIntoView({ behavior: "smooth" });
       }
     },
 

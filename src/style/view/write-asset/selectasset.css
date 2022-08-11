@@ -1,0 +1,11 @@
+/* CSS ăn của của AssetDetail, AssetTable */
+
+/* Component gọi từ LicenseDetail nên cũng ăn CSS của cha nó là LicenseDetail */
+
+#selectAsset .dialog-content {
+    background-color: #fff;
+}
+
+#selectAsset .dialog-title{
+    border-bottom: 1px solid #ccc;
+}

@@ -1,0 +1,56 @@
+#costDetail .dialog {
+    height: 500px !important;
+    width: 700px !important;
+    font-size: 13px;
+}
+
+#costDetail .dialog-body {
+    height: calc(100% - 52px);
+}
+
+#costDetail .dialog-body {
+    padding: 0px;
+}
+
+#costDetail .dialog-title {
+    padding: 16px !important;
+    margin: 0;
+    font-size: 20px;
+}
+
+#costDetail .dialog-content {
+    background-color: #fff !important;
+    height: calc(100% - 72px);
+    padding: 0 16px;
+}
+
+#costDetail h3 {
+    margin: 10px 0;
+}
+
+#costDetail .title-row .dialog-content-label {
+    margin: 0;
+}
+
+#costDetail .row-btn-group {
+    display: flex;
+}
+
+#costDetail .icon-plus {
+    margin-top: 8px;
+}
+
+#costDetail .icon-minus {
+    margin-top: 8px;
+}
+
+#costDetail .row-btn-group div {
+    margin-right: 16px;
+}
+
+#costDetail .source-container {
+    height: 235px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-bottom: 10px;
+}

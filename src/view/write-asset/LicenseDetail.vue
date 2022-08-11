@@ -147,7 +147,7 @@
                         style="min-width: 110px; max-width: 110px"
                         class="text-right"
                       >
-                        HM/KH luỹ kế
+                        Hao mòn năm
                       </th>
                       <th
                         style="min-width: 110px; max-width: 110px"
@@ -175,7 +175,7 @@
                         {{ formatNumber(asset.cost) }}
                       </td>
                       <td class="text-right">
-                        {{ formatNumber(asset.accumulatedDepreciation) }}
+                        {{ formatNumber(asset.annualDepreciation) }}
                       </td>
                       <td class="text-right">
                         {{ formatNumber(asset.remainingValue) }}
@@ -292,12 +292,23 @@
     </div>
     <!-- end dialog -->
 
-    <!-- Dialog chọn tài sản -->
+    <!-- Dialog Chọn tài sản -->
     <select-asset 
       v-if="showSelectAsset"
       :currentSelectedAssets="listAssets"
       @closeSelectAsset="showSelectAsset = false"
-      @updateListAsset="updateListAssets"
+      @updateListAssets="updateListAssets"
+    />
+
+    <!-- Dialog Chi tiết nguyên giá -->
+    <cost-detail 
+      v-if="showCostDetail"
+      :assetId="selectedAssetId"
+      :licenseId="selectedId"
+      :index="selectedIndex"
+      :costDetail="costDetail"
+      @saveCostDetail="saveCostDetail"
+      @closeCostDetail="showCostDetail = false"
     />
 
   </div>
@@ -319,6 +330,7 @@ import BaseInput from "../../components/base/BaseInput.vue";
 import BaseButtonText from "../../components/base/BaseButtonText.vue";
 
 import SelectAsset from "../write-asset/SelectAsset.vue";
+import CostDetail from "../write-asset/CostDetail.vue";
 
 export default {
   components: {
@@ -327,6 +339,7 @@ export default {
     BaseButtonText,
     Paginate,
     SelectAsset,
+    CostDetail,
 
   },
 
@@ -453,7 +466,65 @@ export default {
      * Lưu chứng từ khi thêm hoặc sửa
      */
     saveDataLicense() {
-      console.log("save data license");
+      //Validate chưa chọn tài sản nào
+      if (this.listAssets.length === 0) {
+        this.$emit("validateError", [
+          Resources.Notice.AlertNeedChooseAsset,
+        ]);
+        return; //Không request api
+      }
+      //Set các thuộc tính: chi tiết chứng từ(mã tài sản, detail: tênnguồn-giátrị), tổng nguyên giá (để lên server thêm vào bảng licensedetail)
+      this.license.licenseDetail = []; //Danh sách chi tiết chứng từ
+      this.license.totalCost = 0; //Tổng nguyên giá
+
+      this.listAssets.forEach((asset) => {
+        this.license.licenseDetail.push({
+          assetId: asset.assetId, //Mã tài sản
+          detail: asset.costDetail, //Chi tiết nguyên giá
+        });
+        this.license.totalCost += asset.cost * asset.quantity; //Tổng nguyên giá = Tổng (giá tài sản * số lượng)
+      });
+      console.log("license before send to server: ", this.license);
+
+      //Call API lưu dữ liệu
+      var me = this;
+      console.log(this.formMode, 'formmode');
+      //Nếu là sửa chứng từ
+      if (this.formMode === Enums.FormMode.Edit) {
+        axios
+          .put(
+            Resources.API.GetLicenseById + `${this.selectedId}`,
+            this.license
+          )
+          .then(() => {
+            //Load lại dữ liệu
+            me.$emit("loadData");
+            //Show thông báo thành công
+            me.$emit("showToast", Resources.ToastMsg.EditSuccess);
+            //Đóng form chi tiết LicenseDetail
+            me.$emit("closeDialog");
+          })
+          .catch((error) => {
+            //Emit event validateError, hiện Popup báo cho người dùng các lỗi từ server trả về
+            me.$emit("validateError", error.response.data.exception.errorMsgs);
+          });
+      } else {
+        //Nếu là thêm chứng từ
+        axios
+          .post(Resources.API.PostLicense, this.license)
+          .then(() => {
+            //Load lại dữ liệu
+            me.$emit("loadData");
+            //Show thông báo thành công
+            me.$emit("showToast", Resources.ToastMsg.AddSuccess);
+            //Đóng form chi tiết
+            me.$emit("closeDialog");
+          })
+          .catch((error) => {
+            //Hiện Popup báo cho người dùng các lỗi từ server trả về
+            me.$emit("validateError", error.response.data.exception.errorMsgs);
+          });
+      }
     },
 
     /**
@@ -494,9 +565,11 @@ export default {
 
     /**
      * Lưu chi tiết nguyên giá của tài sản tương ứng vị trí index
+     * Created by: VDDong (11/08/2022)
      */
     saveCostDetail(costDetail, index) {
-      console.log("saveCostDetail", costDetail, index);
+      this.listAssets[index].costDetail = costDetail;
+      console.log(this.listAssets, "list Assets after save cost detail");
     },
 
     /**

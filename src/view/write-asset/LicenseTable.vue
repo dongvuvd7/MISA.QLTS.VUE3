@@ -208,7 +208,7 @@
                 Nguyên giá
               </th>
               <th style="min-width: 110px; max-width: 110px" class="text-right">
-                HM/KH luỹ kế
+                Hao mòn năm
               </th>
               <th style="min-width: 110px; max-width: 110px" class="text-right">
                 Giá trị còn lại
@@ -234,7 +234,7 @@
                 {{ formatNumber(asset.cost) }}
               </td>
               <td class="text-right">
-                {{ formatNumber(asset.accumulatedDepreciation) }}
+                {{ formatNumber(asset.annualDepreciation) }}
               </td>
               <td class="text-right">
                 {{ formatNumber(asset.remainingValue) }}

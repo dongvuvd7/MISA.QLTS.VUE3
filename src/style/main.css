@@ -26,6 +26,8 @@
 @import url('./view/asset/assetDetail.css');
 @import url('./view/write-asset/licensetable.css');
 @import url('./view/write-asset/licensedetail.css');
+@import url('./view/write-asset/selectasset.css');
+@import url('./view/write-asset/costdetail.css');
 
 
 body {
