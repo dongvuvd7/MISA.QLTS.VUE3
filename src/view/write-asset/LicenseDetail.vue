@@ -382,6 +382,7 @@ export default {
   created() {
     /**
      * Khai báo event saveDataLicense tại bus
+     * Created by: VDDong (12/08/2022)
      */
     bus.$on("saveDataLicense", this.saveDataLicense);
 
@@ -457,13 +458,14 @@ export default {
   mounted() {
     /**
      * Auto focus on input field Mã chứng từ
+     * Created by: VDDong (12/08/2022)
      */
     this.$refs.licenseCode.$refs.input.focus();
   },
 
   methods: {
     /**
-     * Lưu chứng từ khi thêm hoặc sửa
+     * Lưu thông tin chứng từ khi thêm hoặc sửa
      * Created by: VDDong (11/08/2022)
      */
     saveDataLicense() {

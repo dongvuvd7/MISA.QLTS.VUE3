@@ -418,7 +418,7 @@ export default {
 
     /**
      * Nhấn nút Lưu thì chọn các tài sản đã chọn checkbox (lưu trong mảng selectedAssets)
-     *
+     * Created by: VDDong (12/08/2022)
      */
     btnSaveOnClick() {
       this.$emit("updateListAssets", this.selectedAssets);

@@ -410,7 +410,7 @@ export default {
     toggleSelectAll() {
       this.selectAll = !this.selectAll;
       //Cập nhật số dòng được chọn
-      if(this.selectAll) this.countSelected = this.licenses.length;
+      if (this.selectAll) this.countSelected = this.licenses.length;
       else this.countSelected = 0;
       //Tích/bỏ tích tất cả các dòng
       this.licenses.forEach((asset) => {
@@ -430,10 +430,10 @@ export default {
     },
 
     /**
-     * Click nút sửa trên từng dòng bản ghi Chứng từ 
+     * Click nút sửa trên từng dòng bản ghi Chứng từ
      * Created by: VDDong (09/08/2022)
      */
-    btnEditOnClick(licenseId){
+    btnEditOnClick(licenseId) {
       this.$emit("btnEditOnClick", licenseId);
     },
 
@@ -441,13 +441,14 @@ export default {
      * Click nút xóa trên từng dòng bản ghi chứng từ
      * Created by: VDDong (09/08/2022)
      */
-    btnDeleteOnClick(license){
+    btnDeleteOnClick(license) {
       this.selectedLicense = license;
       this.$emit("btnDeleteOnClick");
     },
 
     /**
-     * Thực thi xóa dữ liệu
+     * Thực thi xóa dữ liệu Chứng từ
+     * Created by: VDDong (12/08/2022)
      */
     deleteLicenses() {
       var me = this;
@@ -457,18 +458,28 @@ export default {
       this.licenses.forEach((license) => {
         if (license.selected) idToDelete.push(license.licenseId);
       });
-      console.log(idToDelete, 'idToDelete[]');
+      console.log(idToDelete, "idToDelete[]");
       //Call api xóa dữ liệu
+      axios
+        .delete(Resource.API.DeleteLicenseByIds + `${idToDelete}`)
+        .then(() => {
+          //Emit event loadData để load lại dữ liệu
+          bus.$emit("loadData");
+          me.$emit("showToast", Resource.ToastMsg.DeleteSuccess);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
       //Reset biến đếm các bản ghi đã chọn checkbox
       me.countSelected = 0;
-      console.log(me.countSelected, 'me.countSelected');
+      console.log(me.countSelected, "me.countSelected");
     },
-
 
     /**
      * Lấy ra danh sách tài sản theo chứng từ
      * Show danh sách tài sản tương ứng chứng từ vào bảng Tài sản
+     * Created by: VDDong (12/08/2022)
      */
     loadAssetListByLicense(licenseId) {
       var me = this;
@@ -520,6 +531,7 @@ export default {
     formatDate: function (value) {
       return moment(value).format("DD/MM/YYYY");
     },
+    
   },
 };
 </script>

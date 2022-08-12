@@ -109,7 +109,7 @@ import BaseButtonText from "../../components/base/BaseButtonText.vue";
 import BaseInput from "../../components/base/BaseInput.vue";
 import LicenseCombobox from "../../components/base/LicenseCombobox.vue";
 
- import {VMoney} from 'v-money'
+import { VMoney } from "v-money";
 
 export default {
   components: {
@@ -155,16 +155,15 @@ export default {
       showError: false, //Biến validate combobox (show lỗi hay không)
 
       money: {
-          thousands: '.',
-          precision: 0,
-          masked: false /* doesn't work with directive */
-        },
-
+        thousands: ".",
+        precision: 0,
+        masked: false /* doesn't work with directive */,
+      },
 
     };
   },
 
-  directives: {money: VMoney},
+  directives: { money: VMoney },
 
   created() {
     var me = this;
@@ -243,7 +242,10 @@ export default {
     sumValueOfCostSource() {
       var total = 0;
       for (var i = 0; i < this.listSource.length; i++) {
-        console.log(this.listSource[i].value, 'value of listSource [' + i + "]");
+        console.log(
+          this.listSource[i].value,
+          "value of listSource [" + i + "]"
+        );
         //remove . from string
         var value = this.listSource[i].value.toString().replace(/\./g, "");
         total += +value;
@@ -259,7 +261,7 @@ export default {
       console.log(index, "index");
       console.log(value, "value");
       //Lấy text ở thanh input có attribute indexSpec là index
-      //Đợi sau 0,5 giây rồi mới cập nhật giá trị
+      //Đợi sau 0,5 giây rồi mới cập nhật giá trị (tránh lỗi bất động bộ khi element combobox chưa kịp cập nhật attribute valueName)
       setTimeout(() => {
         var costsourceName = document
           .querySelectorAll(`[indexSpec="${index}"]`)[0]
@@ -315,7 +317,7 @@ export default {
     formatNumber: function (value) {
       return numeral(value).format("0,0");
     },
-
+    
   },
 };
 </script>
