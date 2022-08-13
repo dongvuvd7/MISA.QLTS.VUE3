@@ -285,13 +285,14 @@ export default {
      * Nhấn vào btn Xóa
      * CreatedBy: VDDong (26/06/2022)
      */
-    btnDeleteOnClick() {
+  async btnDeleteOnClick() {
       //Đếm số bản ghi đã chọn
       var count = this.$refs.table.selectedAsset.length;
       //Lấy ra bản ghi (trong trường hợp chọn 1 bản ghi)
       var asset = this.$refs.table.selectedAsset[0]; //Bên AssetTable đang làm cách tích vào đúng checkbox mới tính là chọn bản ghi nên chuyển selectedAsset thành mảng (nên xóa 1 cần lấy [0]), nếu đổi về cách làm kiểu chọn dòng là tự tích checkbox thì bỏ [0] đi
 
       if (count > 0) { //Có chọn bản ghi để xóa
+        var assetNotReferencedLicense = true;
         var popupText;
         if (count > 1){ //Xóa nhiều bản ghi
           if(count < 10) popupText = [`0${count} ${Resources.Notice.ConfirmMultiDelete}`,];
@@ -299,18 +300,46 @@ export default {
             `${count} ` + Resources.Notice.ConfirmMultiDelete,
           ];
         }
-        else //Xóa 1 bản ghi
-          popupText = [
-            Resources.Notice.ConfirmSingleDelete + ` ${asset.assetCode} - ${asset.assetName}?`,
-          ];
-        //Hiển thị popup
-        this.popupInfo.displayed = true;
-        this.popupInfo.text = popupText;
-        this.popupInfo.subBtn = false;
-        this.popupInfo.outlineBtn = true;
-        this.popupInfo.mainBtnText = Resources.TextBtn.Delete;
-        this.popupInfo.outlineBtnText = Resources.TextBtn.No;
-        this.popupInfo.action = Enums.Action.Delete;
+        //Xóa 1 bản ghi
+        else {
+          //Kiểm tra xem bản ghi đó có liên kết với chứng từ hay không
+          console.log(asset.assetId);
+        await axios
+            .get(Resources.API.CheckAssetReferencedLicense + `${asset.assetId}`)
+            .then((response) => {
+              //Nếu có liên kết với chứng từ thì không cho xóa
+              if (response.data.length > 0) {
+                //Báo popup thông báo tài sản đã liên kết với chứng từ
+                this.popupInfo.displayed = true;
+                this.popupInfo.text = [`Tài sản có mã ${asset.assetCode} đã phát sinh chứng từ ghi tăng có mã ${response.data[0].LicenseCode}`,];
+                this.popupInfo.subBtn = false;
+                this.popupInfo.outlineBtn = false;
+                this.popupInfo.mainBtnText = Resources.TextBtn.Close;
+                this.popupInfo.action = "";
+                assetNotReferencedLicense = false;
+              }
+              //Nếu không liên kết với chứng từ thì cho xóa
+              else {
+                popupText = [
+                  Resources.Notice.ConfirmSingleDelete + ` ${asset.assetCode} - ${asset.assetName}?`,
+                ];
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+
+        } 
+        if(assetNotReferencedLicense) {
+          //Hiển thị popup
+          this.popupInfo.displayed = true;
+          this.popupInfo.text = popupText;
+          this.popupInfo.subBtn = false;
+          this.popupInfo.outlineBtn = true;
+          this.popupInfo.mainBtnText = Resources.TextBtn.Delete;
+          this.popupInfo.outlineBtnText = Resources.TextBtn.No;
+          this.popupInfo.action = Enums.Action.Delete;
+        }  
       }
       else { //Không có bản ghi nào được chọn
         this.popupInfo.displayed = true;

@@ -107,10 +107,12 @@ export default {
       type: Boolean,
       default: false,
     },
+    //Số thứ tự của combobox để phân biệt các nguoòn nguyên giá với nhau
     indexSpec: {
       type: Number,
       default: -1,
     },
+
   },
 
   data() {
@@ -292,6 +294,7 @@ export default {
         this.error = true;
       } else this.error = false;
     },
+
   },
 };
 </script>

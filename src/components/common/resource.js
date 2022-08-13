@@ -23,6 +23,8 @@ const Resource = {
         GetNewLicenseCode: "https://localhost:44309/api/v1/License/NewCode",
         GetCostSource: "https://localhost:44309/api/v1/CostSource",
         DeleteLicenseByIds: "https://localhost:44309/api/v1/License?entityIds=",
+        CheckAssetReferencedLicense: "https://localhost:44309/api/v1/Assets/AssetReferencedLicense/",
+        
 
     },
 

@@ -53,7 +53,12 @@
                     v-model.lazy="listSource[index].value"
                     v-money="money"
                     style="text-align: right"
+                    :class="{
+                      'error-input': showError && listSource[index].source == '',
+                    }"
                   />
+                  <!-- Thông báo lỗi -->
+                  <div class="error-msg">Không được bỏ trống ô này!</div>
                 </v-col>
                 <v-col cols="2" class="row-btn-group">
                   <div class="icon-plus" @click="btnPlusOnClick"></div>
@@ -221,8 +226,34 @@ export default {
         if (item.source == "") {
           this.showError = true;
           valid = false;
+          ///focus chuột vào ô input combobox
+          //get thẻ input có valuename rỗng
+          var inputs = document.querySelectorAll("input[valuename='']");
+          console.log(inputs);
+          //focus vào thẻ input đầu tiên
+          inputs[0].focus();
         }
       });
+      //Validate tên nguồn nguyên giá không được trùng
+      if (valid) {
+        //Duyệt từ cuối mảng listSource về đầu mảng, nếu listSource.source đã tồn tại thì focus vào ô input đó
+        for (var i = this.listSource.length - 1; i >= 0; i--) {
+          for (var j = 0; j < this.listSource.length; j++) {
+            console.log(this.listSource[i].source, ' ', this.listSource[j].source);
+            if (i != j && this.listSource[i].source == this.listSource[j].source) {
+              //Lấy ô input cuối có tên nguồn nguyên giá trùng
+              var inputs = document.querySelectorAll("input[valuename='" + this.listSource[j].source + "']");
+              //Thêm class error-input vào ô input cuối có tên nguồn nguyên giá trùng
+              inputs[inputs.length - 1].classList.add("error-input");
+              //Đổi text của class error-msg liền ngay sau ô input đó thành "Nguồn chi phí đã tồn tại!"
+              inputs[inputs.length - 1].nextElementSibling.innerHTML = "Nguồn chi phí đã tồn tại!";
+              //Focus vào ô input cuối có tên nguồn nguyên giá trùng
+              inputs[inputs.length - 1].focus();
+              return;
+            }
+          }
+        }
+      }
       //Pass validate
       if (valid) {
         //JSON.stringify là hàm chuyển đổi đối tượng JS thành chuỗi JSON
@@ -317,7 +348,7 @@ export default {
     formatNumber: function (value) {
       return numeral(value).format("0,0");
     },
-    
+
   },
 };
 </script>
