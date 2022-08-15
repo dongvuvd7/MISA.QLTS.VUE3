@@ -53,6 +53,7 @@
                     v-model.lazy="listSource[index].value"
                     v-money="money"
                     style="text-align: right"
+                    maxlength="18"
                     :class="{
                       'error-input': showError && listSource[index].source == '',
                     }"

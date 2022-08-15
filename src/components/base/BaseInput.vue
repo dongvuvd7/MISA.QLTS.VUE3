@@ -23,6 +23,7 @@
           fieldName == 'depreciationRate' || fieldName == 'lifeTime',
         'm-input-search-assets': fieldName == 'searchAssets',
         'm-input-search-licenses': fieldName == 'searchLicenses',
+        'm-input-licenseCode': fieldName == 'licenseCode',
       }"
       :disabled="disabled"
       :style="{ 'text-align': textAlign }"

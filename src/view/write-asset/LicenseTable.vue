@@ -465,6 +465,8 @@ export default {
         .then(() => {
           //Emit event loadData để load lại dữ liệu
           bus.$emit("loadData");
+          //Reset bảng hiện danh sách tài sản tương ứng
+          me.listAssets = [];
           me.$emit("showToast", Resource.ToastMsg.DeleteSuccess);
         })
         .catch((error) => {

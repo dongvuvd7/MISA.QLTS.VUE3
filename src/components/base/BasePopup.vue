@@ -161,7 +161,22 @@ export default {
               .querySelectorAll(".m-input-assetName")[0]
               .classList.add("error-input");
           }
-        } else {
+        } else if (this.text.find((item) => item.includes("Mã chứng từ"))) {
+          // debugger
+          //change error message of m-input-assetName
+          if (document.querySelector(".m-input-licenseCode + .error-msg")) {
+            document.querySelector(
+              ".m-input-licenseCode + .error-msg"
+            ).innerHTML = this.text.find((item) =>
+              item.includes("Mã chứng từ")
+            );
+            //add class error-input to input asset name
+            document
+              .querySelectorAll(".m-input-licenseCode")[0]
+              .classList.add("error-input");
+          }
+        }
+        else {
           //remove class error-input to input asset code
           if (document.querySelectorAll(".m-input-assetCode").length != 0)
             document

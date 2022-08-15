@@ -100,6 +100,7 @@
                     text="Chọn tài sản"
                     :btnType="'outline-btn'"
                     @click="showSelectAsset = true"
+                    class="btn-select-asset"
                   />
                 </div>
               </div>
@@ -114,7 +115,7 @@
                   class="no-content-table-asset"
                   v-if="listAssets.length == 0"
                 >
-                  Chứng từ chưa liên kết tài sản nào
+                  <!-- Chứng từ chưa liên kết tài sản nào -->
                 </div>
                 <table
                   id="tblAsset"
@@ -293,7 +294,7 @@
     <!-- end dialog -->
 
     <!-- Dialog Chọn tài sản -->
-    <select-asset 
+    <select-asset
       v-if="showSelectAsset"
       :currentSelectedAssets="listAssets"
       @closeSelectAsset="showSelectAsset = false"
@@ -301,7 +302,7 @@
     />
 
     <!-- Dialog Chi tiết nguyên giá -->
-    <cost-detail 
+    <cost-detail
       v-if="showCostDetail"
       :assetId="selectedAssetId"
       :licenseId="selectedId"
@@ -310,7 +311,6 @@
       @saveCostDetail="saveCostDetail"
       @closeCostDetail="showCostDetail = false"
     />
-
   </div>
 </template>
 
@@ -340,7 +340,6 @@ export default {
     Paginate,
     SelectAsset,
     CostDetail,
-
   },
 
   props: {
@@ -368,6 +367,7 @@ export default {
         //Danh sách chi tiết chứng từ, khi vào LicenseRepository sẽ tách ra để insert trường này vào bảng LicenseDetail
         licenseDetail: [],
       },
+      licenseOrigin: {}, //Chứng từ ban đầu khi mở form detail license
       selectedAssetId: null, //id tài sản được chọn (truyền vào form chi tiết nguyên giá)
       selectedIndex: null, //index của tài sản được chọn (truyền vào form chi tiết nguyên giá)
       costDetail: null, //chi tiết nguyên giá của tài sản được chọn (truyền vào form chi tiết nguyên giá)
@@ -403,6 +403,7 @@ export default {
           license.writeDate.setHours(license.writeDate.getHours() + 7); //+7 tiếng để đối sang giờ UTC+7
           license.assetIds = "";
           me.license = license;
+          me.licenseOrigin = { ...license }; //Lưu thông tin chứng từ ban đầu khi mở form detail license
         })
         .catch(function (error) {
           console.log(error);
@@ -469,65 +470,126 @@ export default {
      * Created by: VDDong (11/08/2022)
      */
     saveDataLicense() {
-      //Validate chưa chọn tài sản nào
-      if (this.listAssets.length === 0) {
-        this.$emit("validateError", [
-          Resources.Notice.AlertNeedChooseAsset,
-        ]);
-        return; //Không request api
-      }
-      //Set các thuộc tính: chi tiết chứng từ(mã tài sản, detail: tênnguồn-giátrị), tổng nguyên giá (để lên server thêm vào bảng licensedetail)
-      this.license.licenseDetail = []; //Danh sách chi tiết chứng từ
-      this.license.totalCost = 0; //Tổng nguyên giá
+      var valid = true;
+      //Validate bắt buộc nhập
+      valid = this.requiredFieldLicenseValidate();
+      //Nếu pass validate bắt buộc nhập
+      if (valid) {
+        //Validate chưa chọn tài sản nào
+        if (this.listAssets.length === 0) {
+          this.$emit("validateError", [Resources.Notice.AlertNeedChooseAsset]);
+          return; //Không request api
+        }
+        //Set các thuộc tính: chi tiết chứng từ(mã tài sản, detail: tênnguồn-giátrị), tổng nguyên giá (để lên server thêm vào bảng licensedetail)
+        this.license.licenseCode = this.license.licenseCode.trim(); //Xóa khoảng trắng ở đầu và cuối của mã chứng từ
+        this.license.licenseDetail = []; //Danh sách chi tiết chứng từ
+        this.license.totalCost = 0; //Tổng nguyên giá
 
-      this.listAssets.forEach((asset) => {
-        this.license.licenseDetail.push({
-          assetId: asset.assetId, //Mã tài sản
-          detail: asset.costDetail, //Chi tiết nguyên giá
+        this.listAssets.forEach((asset) => {
+          this.license.licenseDetail.push({
+            assetId: asset.assetId, //Mã tài sản
+            detail: asset.costDetail, //Chi tiết nguyên giá
+          });
+          this.license.totalCost += asset.cost; //Tổng nguyên giá = Tổng (giá các tài sản)
         });
-        this.license.totalCost += asset.cost; //Tổng nguyên giá = Tổng (giá các tài sản)
-      });
-      console.log("license before send to server: ", this.license);
+        console.log("license before send to server: ", this.license);
 
-      //Call API lưu dữ liệu
-      var me = this;
-      console.log(this.formMode, 'formmode');
-      //Nếu là sửa chứng từ
-      if (this.formMode === Enums.FormMode.Edit) {
-        axios
-          .put(
-            Resources.API.GetLicenseById + `${this.selectedId}`,
-            this.license
-          )
-          .then(() => {
-            //Load lại dữ liệu
-            me.$emit("loadData");
-            //Show thông báo thành công
-            me.$emit("showToast", Resources.ToastMsg.EditSuccess);
-            //Đóng form chi tiết LicenseDetail
-            me.$emit("closeDialog");
-          })
-          .catch((error) => {
-            //Emit event validateError, hiện Popup báo cho người dùng các lỗi từ server trả về
-            me.$emit("validateError", error.response.data.exception.errorMsgs);
-          });
-      } else {
-        //Nếu là thêm chứng từ
-        axios
-          .post(Resources.API.PostLicense, this.license)
-          .then(() => {
-            //Load lại dữ liệu
-            me.$emit("loadData");
-            //Show thông báo thành công
-            me.$emit("showToast", Resources.ToastMsg.AddSuccess);
-            //Đóng form chi tiết
-            me.$emit("closeDialog");
-          })
-          .catch((error) => {
-            //Hiện Popup báo cho người dùng các lỗi từ server trả về
-            me.$emit("validateError", error.response.data.exception.errorMsgs);
-          });
+        //Call API lưu dữ liệu
+        var me = this;
+        console.log(this.formMode, "formmode");
+        //Nếu là sửa chứng từ
+        if (this.formMode === Enums.FormMode.Edit) {
+          axios
+            .put(
+              Resources.API.GetLicenseById + `${this.selectedId}`,
+              this.license
+            )
+            .then(() => {
+              //Load lại dữ liệu
+              me.$emit("loadData");
+              //Show thông báo thành công
+              me.$emit("showToast", Resources.ToastMsg.EditSuccess);
+              //Đóng form chi tiết LicenseDetail
+              me.$emit("closeDialog");
+            })
+            .catch((error) => {
+              //Emit event validateError, hiện Popup báo cho người dùng các lỗi từ server trả về
+              me.$emit(
+                "validateError",
+                error.response.data.exception.errorMsgs
+              );
+            });
+        } else {
+          //Nếu là thêm chứng từ
+          axios
+            .post(Resources.API.PostLicense, this.license)
+            .then(() => {
+              //Load lại dữ liệu
+              me.$emit("loadData");
+              //Show thông báo thành công
+              me.$emit("showToast", Resources.ToastMsg.AddSuccess);
+              //Đóng form chi tiết
+              me.$emit("closeDialog");
+            })
+            .catch((error) => {
+              //Hiện Popup báo cho người dùng các lỗi từ server trả về
+              me.$emit(
+                "validateError",
+                error.response.data.exception.errorMsgs
+              );
+            });
+        }
       }
+    },
+
+    /**
+     * Validate bắt buộc nhập những file required trong form detail license
+     * Created by: VDDong (15/08/2022)
+     */
+    requiredFieldLicenseValidate() {
+      //get all input with class m-input-required
+      var inputs = this.$el.querySelectorAll(".m-input-required");
+      //loop all input
+      for (var i = 0; i < inputs.length; i++) {
+        //get value of input
+        var value = inputs[i].value;
+        //if value is empty
+        if (value == "") {
+          //show error
+          bus.$emit("validate");
+          //focus on input
+          inputs[i].focus();
+          //break loop
+          return false;
+        }
+      }
+
+      //get all input with name is date
+      var inputsDate = this.$el.querySelectorAll(
+        '.dialog .dialog-content input[name="date"]'
+      );
+      //loop all input name is date
+      for (var j = 0; j < inputsDate.length; j++) {
+        //get value of input
+        var valueInputDate = inputsDate[j].value;
+        //if value is empty
+        if (valueInputDate == "") {
+          //show error by add class error-input to that elemnt
+          inputsDate[j].classList.add("error-input");
+          //add title = "Bạn cần nhập trường này."
+          inputsDate[j].title = Resources.Notice.RequiredField;
+          //focus on input
+          inputsDate[j].focus();
+          //break loop
+          return false;
+        } else {
+          //remove class error-input
+          inputsDate[j].classList.remove("error-input");
+        }
+      }
+
+      //if all input is not empty
+      return true;
     },
 
     /**
@@ -560,10 +622,32 @@ export default {
      * Created by: VDDong (10/08/2022)
      */
     btnCancelOnClick() {
+      var me = this;
+      const licenseInit = JSON.parse(JSON.stringify(me.licenseOrigin));
+      console.log(licenseInit, "license init");
+      const licenseNow = JSON.parse(JSON.stringify(me.license));
+      console.log(licenseNow, "license now");
       //Emit event btnCancelOnClick cho component cha show popup
-      if (this.formMode == Enums.FormMode.Edit)
-        this.$emit("btnCancelOnClick", Enums.Action.Put);
-      else this.$emit("btnCancelOnClick", Enums.Action.Post);
+      if (me.formMode == Enums.FormMode.Edit) {
+        if (me.compareTwoObject(licenseNow, licenseInit))
+          me.$emit("btnCancelOnClick", Enums.Action.Put);
+        else me.$emit("closeDialog");
+      } else {
+        me.$emit("btnCancelOnClick", Enums.Action.Post);
+      }
+    },
+
+    /**
+     * So sánh 2 object để kiểm tra có thay đổi hay không
+     * Created by: VDDong (15/08/2022)
+     */
+    compareTwoObject(obj1, obj2) {
+      for (let i in obj1) {
+        if (obj1[i] !== obj2[i]) {
+          return true;
+        }
+      }
+      return false;
     },
 
     /**
@@ -661,5 +745,10 @@ export default {
 }
 .tr-paging-assets-license td {
   border-top: 1px solid #e5e5e5 !important;
+}
+
+.btn-select-asset:hover {
+  color: #ffffff !important;
+  background-color: var(--primary-color-active) !important;
 }
 </style>
