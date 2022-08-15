@@ -92,6 +92,9 @@
                     :placeholder="'Tìm kiếm theo mã, tên tài sản'"
                     :withIcon="true"
                     :icon="'icon-search-black'"
+                    :fieldName="'searchAssets'"
+                    :value="searchTextListAsset"
+                    @searching="typingSearch"
                   />
                 </div>
                 <div class="dialog-table-header-right">
@@ -237,23 +240,38 @@
                           <!-- Tổng số bản ghi -->
                           <div class="total-record">
                             <span>Tổng số: </span>
-                            <span class="bold">{{ listAssets.length }}</span>
+                            <span class="bold">{{ totalRowsListAsset }}</span>
                             <span> bản ghi</span>
                           </div>
                           <!-- Kích thước trang -->
                           <div class="page-size">
-                            <select name="pageSize" id="pageSize">
+                            <select
+                              name="pageSize"
+                              id="pageSize"
+                              v-model="pageSizeListAsset"
+                            >
+                              <option value="2">2</option>
+                              <option value="10">10</option>
                               <option value="20">20</option>
                               <option value="30">30</option>
                               <option value="50">50</option>
                             </select>
                           </div>
                           <!-- Phân trang -->
-                          <div class="btn-prev-page">
+                          <div
+                            class="btn-prev-page"
+                            @click="
+                              currentPageListAsset = Math.max(
+                                currentPageListAsset - 1,
+                                1
+                              )
+                            "
+                          >
                             <div class="icon-prev-page"></div>
                           </div>
                           <paginate
-                            :page-count="1"
+                            v-model="currentPageListAsset"
+                            :page-count="totalPageListAsset"
                             :page-range="3"
                             :margin-pages="1"
                             :prev-text="''"
@@ -261,9 +279,16 @@
                             :container-class="'pagination'"
                             :page-class="'page-item'"
                           >
-                            1
                           </paginate>
-                          <div class="btn-next-page">
+                          <div
+                            class="btn-next-page"
+                            @click="
+                              currentPageListAsset = Math.min(
+                                currentPageListAsset + 1,
+                                totalPageListAsset
+                              )
+                            "
+                          >
                             <div class="icon-next-page"></div>
                           </div>
                         </div>
@@ -375,7 +400,11 @@ export default {
       showSelectAsset: false, //Hiển thị form chọn tài sản khi thêm mới chứng từ
       showCostDetail: false, //Hiển thị form chi tiết nguyên giá của tài sản
 
-      currentPagelistAssets: 1, //Trang tài sản hiện tại, đang fix cứng là 1
+      currentPageListAsset: 1, //Trang tài sản hiện tại, đang fix cứng là 1
+      totalPageListAsset: 1, //Tổng số trang tài sản
+      pageSizeListAsset: 10, //Số lượng tài sản trên một trang
+      searchTextListAsset: "", //Từ khóa tìm kiếm tài sản
+      totalRowsListAsset: 0, //Tổng số các bản ghi tài sản
     };
   },
 
@@ -408,12 +437,69 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+      this.getListAssetsByLicenseId();
+    } else {
+      //Nếu là form thêm chứng từ
+      //Lấy mã chứng từ mới
+      this.license.licenseCode = this.getNewLicenseCode();
+    }
+  },
+
+  mounted() {
+    /**
+     * Auto focus on input field Mã chứng từ
+     * Created by: VDDong (12/08/2022)
+     */
+    this.$refs.licenseCode.$refs.input.focus();
+  },
+
+  updated() {
+    /**
+     * Khi có cập nhật thì tính lại số trang
+     * Created by: VDDong (09/08/2022)
+     */
+    this.totalPageListAsset = Math.ceil(
+      this.totalRowsListAsset / this.pageSizeListAsset
+    );
+  },
+
+  watch: {
+    /**
+     * Theo dõi biến số trang hiện tại
+     * CreatedBy: VDDong(13/07/2022)
+     */
+    currentPageListAsset() {
+      var me = this;
+      me.getListAssetsByLicenseId();
+    },
+    /**
+     * Theo dõi biến kích thước trang
+     * CreatedBy: VDDong(13/07/2022)
+     */
+    pageSizeListAsset() {
+      var me = this;
+      //Quay về trang đầu
+      me.currentPageListAsset = 1;
+      me.getListAssetsByLicenseId();
+    },
+  },
+
+  methods: {
+    /**
+     * Lấy thông tin các tài sản theo chứng từ
+     * Created by: VDDong (15/08/2022)
+     */
+    getListAssetsByLicenseId() {
+      var me = this;
       //Gửi yêu cầu api lấy danh sách các tài sản theo chứng từ
       me.listAssets = [];
+      console.log(`https://localhost:44309/api/v1/Assets/GetFilterByLicenseId?licenseId=${me.selectedId}&searchText=${me.searchTextListAsset}&pageSize=${me.pageSizeListAsset}&pageNumber=${me.currentPageListAsset}`);
       axios
-        .get(Resources.API.GetAssetsByLicenseId + `${me.selectedId}`)
+        .get(`${Resources.API.GetFilterAssetByLicenseId}${me.selectedId}&searchText=${me.searchTextListAsset}&pageSize=${me.pageSizeListAsset}&pageNumber=${me.currentPageListAsset}`)
         .then(function (response) {
-          var listAssets = response.data || [];
+          me.totalRowsListAsset = response.data.totalRecords;
+          var listAssets = response.data.data || [];
+          console.log(listAssets);
           listAssets.forEach((asset) => {
             //Set các thuộc tính
             var startUseYear = asset.useDate.substring(0, 4); //Năm mua
@@ -449,22 +535,8 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
-    } else {
-      //Nếu là form thêm chứng từ
-      //Lấy mã chứng từ mới
-      this.license.licenseCode = this.getNewLicenseCode();
-    }
-  },
+    },
 
-  mounted() {
-    /**
-     * Auto focus on input field Mã chứng từ
-     * Created by: VDDong (12/08/2022)
-     */
-    this.$refs.licenseCode.$refs.input.focus();
-  },
-
-  methods: {
     /**
      * Lưu thông tin chứng từ khi thêm hoặc sửa
      * Created by: VDDong (11/08/2022)
@@ -683,6 +755,18 @@ export default {
           console.log(error);
         });
     },
+
+    /**
+     * Tìm kiếm tài sản theo tên hoặc mã tài sản 
+     * Created by: VDDong (15/08/2022)
+     */
+    typingSearch(searchText) {
+      var me = this;
+      me.searchTextListAsset = searchText;
+      me.currentPageListAsset = 1;
+      me.getListAssetsByLicenseId();
+    },
+
     /**
      * Cập nhật dữ liệu tương ứng khi thay đổi input (validate)
      * Created by: VDDong  (10/08/2022)

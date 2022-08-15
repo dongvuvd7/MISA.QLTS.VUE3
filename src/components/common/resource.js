@@ -24,7 +24,7 @@ const Resource = {
         GetCostSource: "https://localhost:44309/api/v1/CostSource",
         DeleteLicenseByIds: "https://localhost:44309/api/v1/License?entityIds=",
         CheckAssetReferencedLicense: "https://localhost:44309/api/v1/Assets/AssetReferencedLicense/",
-        
+        GetFilterAssetByLicenseId: "https://localhost:44309/api/v1/Assets/GetFilterByLicenseId?licenseId=",
 
     },
 
