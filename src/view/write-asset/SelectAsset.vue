@@ -86,12 +86,16 @@
                   v-for="(asset, index) in listAssets"
                   :key="index"
                   :class="{ 'selected-row': asset.selected }"
-                  @click.exact="selectRow(asset, index)"
                   @click.ctrl="ctrlSelectRow(asset, index)"
                   @click.shift="shiftSelectRow(index)"
+                  tabindex="0"
                 >
                   <td class="text-center">
-                    <input type="checkbox" v-model="asset.selected" />
+                    <input 
+                      type="checkbox"
+                      v-model="asset.selected"
+                      @click="checkboxRecordOnClick(asset, index)" 
+                    />
                   </td>
                   <td class="text-center">
                     {{ (currentPage - 1) * pageSize + index + 1 }}
@@ -342,21 +346,23 @@ export default {
      * Created by: VDDong (11/08/2022)
      */
     ctrlSelectRow(clickedAsset, index) {
-      this.selectedIndex = index; //Đánh dấu vị trí dòng đang chọn chọn
+      var me = this;
+      me.selectedIndex = index; //Đánh dấu vị trí dòng đang chọn chọn
       //Chọn dòng vừa click
       clickedAsset.selected = !clickedAsset.selected;
       //Cập nhật số dòng được chọn
       if (!clickedAsset.selected) {
-        //Nếu bỏ chọn
-        this.countSelected--;
-        const removeIndex = this.selectedAssets.findIndex(
-          (asset) => asset.assetCode === clickedAsset.assetCode
+        //Xóa asset vừa bỏ tích checkbox ra khỏi danh sách selectedAsset
+        me.selectedAssets = me.selectedAssets.filter(
+          (asset) => asset.assetId !== clickedAsset.assetId
         );
-        this.selectedAssets.splice(removeIndex, 1);
+        //Giảm biến đếm số dòng được chọn
+        me.countSelected--;
       } else {
-        //Nếu chọn
-        this.countSelected++;
-        this.selectedAssets.push(clickedAsset);
+        //Thêm asset vừa chọn vào selectedAsset
+        me.selectedAssets.push(clickedAsset);
+        //Tăng biến đếm số dòng được chọn
+        me.countSelected++;
       }
     },
 
@@ -419,6 +425,33 @@ export default {
           //thì chỉ xóa những bản ghi của trang hiện tại thôi
         }
       });
+    },
+
+    /**
+     * Chọn vào checkbox của từng bản ghi
+     * Created by: VDDong (16/08/2022)
+     */
+    checkboxRecordOnClick(clickedAsset, index) {
+      var me = this;
+      //Chọn dòng vừa click
+      me.selectedIndex = index;
+      //Chọn lại thì bỏ chọn
+      clickedAsset.selected = !clickedAsset.selected;
+
+      //Cập nhật số dòng được chọn
+      if (!clickedAsset.selected) {
+        //Xóa asset vừa bỏ tích checkbox ra khỏi danh sách selectedAsset
+        me.selectedAssets = me.selectedAssets.filter(
+          (asset) => asset.assetId !== clickedAsset.assetId
+        );
+        //Giảm biến đếm số dòng được chọn
+        me.countSelected--;
+      } else {
+        //Thêm asset vừa chọn vào selectedAsset
+        me.selectedAssets.push(clickedAsset);
+        //Tăng biến đếm số dòng được chọn
+        me.countSelected++;
+      }
     },
 
     /**

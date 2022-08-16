@@ -55,18 +55,24 @@
                     style="text-align: right"
                     maxlength="18"
                     :class="{
-                      'error-input': showError && listSource[index].source == '',
+                      'error-input':
+                        showError && listSource[index].source == '',
                     }"
                   />
                   <!-- Thông báo lỗi -->
                   <div class="error-msg">Không được bỏ trống ô này!</div>
                 </v-col>
                 <v-col cols="2" class="row-btn-group">
-                  <div class="icon-plus" @click="btnPlusOnClick"></div>
+                  <div
+                    class="icon-plus"
+                    @click="btnPlusOnClick"
+                    title="Thêm nguồn chi phí"
+                  ></div>
                   <div
                     class="icon-minus"
                     v-if="listSource.length > 1"
                     @click="btnMinusOnClick(index)"
+                    title="Bỏ nguồn chi phí"
                   ></div>
                 </v-col>
               </v-row>
@@ -165,7 +171,6 @@ export default {
         precision: 0,
         masked: false /* doesn't work with directive */,
       },
-
     };
   },
 
@@ -237,13 +242,19 @@ export default {
         //Duyệt từ cuối mảng listSource về đầu mảng, nếu listSource.source đã tồn tại thì focus vào ô input đó
         for (var i = this.listSource.length - 1; i >= 0; i--) {
           for (var j = 0; j < this.listSource.length; j++) {
-            if (i != j && this.listSource[i].source == this.listSource[j].source) {
+            if (
+              i != j &&
+              this.listSource[i].source == this.listSource[j].source
+            ) {
               //Lấy ô input cuối có tên nguồn nguyên giá trùng
-              var inputs = document.querySelectorAll("input[valuename='" + this.listSource[j].source + "']");
+              var inputs = document.querySelectorAll(
+                "input[valuename='" + this.listSource[j].source + "']"
+              );
               //Thêm class error-input vào ô input cuối có tên nguồn nguyên giá trùng
               inputs[inputs.length - 1].classList.add("error-input");
               //Đổi text của class error-msg liền ngay sau ô input đó thành "Nguồn chi phí đã tồn tại!"
-              inputs[inputs.length - 1].nextElementSibling.innerHTML = "Nguồn chi phí đã tồn tại!";
+              inputs[inputs.length - 1].nextElementSibling.innerHTML =
+                "Nguồn chi phí đã tồn tại!";
               //Focus vào ô input cuối có tên nguồn nguyên giá trùng
               inputs[inputs.length - 1].focus();
               return;
@@ -253,7 +264,7 @@ export default {
       }
       //Pass validate
       if (valid) {
-        console.log(this.listSource, 'listSource');
+        console.log(this.listSource, "listSource");
         //JSON.stringify là hàm chuyển đổi đối tượng JS thành chuỗi JSON
         this.$emit(
           "saveCostDetail",
@@ -340,7 +351,6 @@ export default {
     formatNumber: function (value) {
       return numeral(value).format("0,0");
     },
-
   },
 };
 </script>

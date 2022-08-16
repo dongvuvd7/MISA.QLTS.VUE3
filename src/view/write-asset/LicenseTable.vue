@@ -20,6 +20,7 @@
             class="icon-delete"
             v-if="countSelected > 1"
             @click="btnDeleteOnClick({})"
+            title="Xóa nhiều chứng từ"
           ></div>
           <div class="icon-print" style="margin-left: 20px"></div>
           <div class="icon-vertical-dot" style="margin-left: 20px"></div>
@@ -94,10 +95,12 @@
                   <div
                     class="icon-edit"
                     @click="btnEditOnClick(license.licenseId)"
+                    title="Sửa chứng từ"
                   ></div>
                   <div
                     class="icon-delete"
                     @click="btnDeleteOneOnClick(license)"
+                    title="Xóa chứng từ"
                   ></div>
                 </div>
               </td>
@@ -328,6 +331,8 @@ export default {
      * Created by: VDDong (09/08/2022)
      */
     currentPage(value) {
+      //Reset bảng tài sản tương ứng bên dưới
+      this.listAssets = [];
       //Emit event changePageNumber cho component cha
       this.$emit("changePageNumber", value);
       this.selectAll = false;
@@ -337,6 +342,8 @@ export default {
      * Created by: VDDong (09/08/2022)
      */
     pageSize(value) {
+      //Reset bảng tài sản tương ứng bên dưới
+      this.listAssets = [];
       //Quay về trang đầu
       this.currentPage = 1;
       //Emit event changePageSize cho component cha

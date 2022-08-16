@@ -47,7 +47,7 @@
                     format="DD/MM/YYYY"
                     :editable="true"
                     :clearable="false"
-                    :disabled-date="disabledOfLicenseDate"
+                    :disabled-date="disabledAfterToday"
                   ></date-picker>
                   <!-- <div class="date-icon">
                     <div class="input-icon icon-calendar"></div>
@@ -65,7 +65,7 @@
                     format="DD/MM/YYYY"
                     :editable="true"
                     :clearable="false"
-                    :disabled-date="disabledOfWriteDate"
+                    :disabled-date="disabledAfterToday"
                   ></date-picker>
                 </v-col>
               </v-row>
@@ -195,10 +195,12 @@
                                 asset.costDetail
                               )
                             "
+                            title="Sửa nguồn hình thành tài sản"
                           ></div>
                           <div
                             class="icon-delete"
                             @click="btnDeleteOnClick(asset.assetId)"
+                            title="Bỏ tài sản"
                           ></div>
                         </div>
                       </td>
@@ -766,17 +768,15 @@ export default {
       //Cập nhật thuộc tính [fieldName] tương ứng
       this.license[fieldName] = value;
     },
+
     /**
      * Không cho phép chọn ngày sau ngày hiện tại
-     * Ngày ghi tăng không trước ngày chứng từ
      * CreatedBy: VDDong (09/05/2022)
      */
-    disabledOfLicenseDate: function (date) {
-      return date > new Date() || date > this.license.writeDate;
+    disabledAfterToday: function (date) {
+      return date > new Date();
     },
-    disabledOfWriteDate: function (date) {
-      return date > new Date() || date < new Date(this.license.licenseDate);
-    },
+
     /**
      * Tính tổng các giá trị
      * (Ở đây tính Tổng các giá trị của listAssets)
