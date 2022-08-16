@@ -97,7 +97,7 @@
                   ></div>
                   <div
                     class="icon-delete"
-                    @click="btnDeleteOnClick(license)"
+                    @click="btnDeleteOneOnClick(license)"
                   ></div>
                 </div>
               </td>
@@ -438,12 +438,22 @@ export default {
     },
 
     /**
-     * Click nút xóa trên từng dòng bản ghi chứng từ
+     * Click nút xóa nhiều
      * Created by: VDDong (09/08/2022)
      */
     btnDeleteOnClick(license) {
       this.selectedLicense = license;
       this.$emit("btnDeleteOnClick");
+    },
+
+    /**
+     * Click vào nút xóa đơn trên từng dòng bản ghi chứng từ
+     * Created by: VDDong (16/08/2022)
+     */
+    btnDeleteOneOnClick(license) {
+      var me = this;
+      me.selectedLicense = license;
+      me.$emit("btnDeleteOneOnClick", license);
     },
 
     /**
@@ -458,7 +468,6 @@ export default {
       this.licenses.forEach((license) => {
         if (license.selected) idToDelete.push(license.licenseId);
       });
-      console.log(idToDelete, "idToDelete[]");
       //Call api xóa dữ liệu
       axios
         .delete(Resource.API.DeleteLicenseByIds + `${idToDelete}`)
@@ -475,7 +484,6 @@ export default {
 
       //Reset biến đếm các bản ghi đã chọn checkbox
       me.countSelected = 0;
-      console.log(me.countSelected, "me.countSelected");
     },
 
     /**

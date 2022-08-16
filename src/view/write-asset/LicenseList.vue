@@ -22,6 +22,7 @@
         @search="search"
         @btnEditOnClick="btnEditOnClick"
         @btnDeleteOnClick="btnDeleteOnClick"
+        @btnDeleteOneOnClick="btnDeleteOneOnClick"
         @changePageSize="changePageSize"
         @changePageNumber="changePageNumber"
         @showToast="showToastMessage"
@@ -141,7 +142,6 @@ export default {
         )
         .then((response) => {
           var listLicenses = response.data.data;
-          console.log(listLicenses, "listLicenses");
           listLicenses.forEach((license) => {
             license.selected = false; //Chưa tích checkbox
             license.licenseDate = new Date(license.licenseDate); //Ngày bắt đầu sử dụng
@@ -173,14 +173,13 @@ export default {
      * Created by: VDDong (09/08/2022)
      */
     btnEditOnClick(licenseId) {
-      console.log("licenseId", licenseId + "on click btn edit");
       this.showDialog = true;
       this.formMode = Enums.FormMode.Edit;
       this.selectedId = licenseId;
     },
 
     /**
-     * Click nút xóa Chứng từ
+     * Click nút xóa nhiều Chứng từ
      * Created by: VDDong (10/08/2022)
      */
     btnDeleteOnClick() {
@@ -211,6 +210,23 @@ export default {
         this.popupInfo.outlineBtnText = Resources.TextBtn.No;
         this.popupInfo.action = Enums.Action.DeleteLicense;
       }
+    },
+
+    /**
+     * Click vào nút xóa đơn lẻ trên 1 dòng chứng từ
+     * Created by: VDDong (16/08/2022)
+     */
+    btnDeleteOneOnClick(license) {
+      var me = this;
+      var popupText = [Resources.Notice.ConfirmSingleDelete + ` chứng từ có mã ${license.licenseCode}?`];
+      //Hiển thị popup
+      me.popupInfo.displayed = true;
+      me.popupInfo.text = popupText;
+      me.popupInfo.subBtn = false;
+      me.popupInfo.outlineBtn = true;
+      me.popupInfo.mainBtnText = Resources.TextBtn.Delete;
+      me.popupInfo.outlineBtnText = Resources.TextBtn.No;
+      me.popupInfo.action = Enums.Action.DeleteLicense;
     },
 
     /**

@@ -493,13 +493,11 @@ export default {
       var me = this;
       //Gửi yêu cầu api lấy danh sách các tài sản theo chứng từ
       me.listAssets = [];
-      console.log(`https://localhost:44309/api/v1/Assets/GetFilterByLicenseId?licenseId=${me.selectedId}&searchText=${me.searchTextListAsset}&pageSize=${me.pageSizeListAsset}&pageNumber=${me.currentPageListAsset}`);
       axios
         .get(`${Resources.API.GetFilterAssetByLicenseId}${me.selectedId}&searchText=${me.searchTextListAsset}&pageSize=${me.pageSizeListAsset}&pageNumber=${me.currentPageListAsset}`)
         .then(function (response) {
           me.totalRowsListAsset = response.data.totalRecords;
           var listAssets = response.data.data || [];
-          console.log(listAssets);
           listAssets.forEach((asset) => {
             //Set các thuộc tính
             var startUseYear = asset.useDate.substring(0, 4); //Năm mua
@@ -513,20 +511,17 @@ export default {
             asset.remainingValue = asset.cost - asset.accumulatedDepreciation; //Giá trị còn lại
             me.listAssets.push(asset);
           });
-          console.log("list assets of license: ", me.listAssets);
 
           //Lấy dữ liệu chi tiết nguyên giá của các tài sản của chứng từ đang sửa
           axios
             .get(Resources.API.GetLicenseDetailByLicenseId + `${me.selectedId}`)
             .then(function (response) {
               var licenseDetails = response.data;
-              console.log(licenseDetails, "licenseDetails");
               for (let index = 0; index < licenseDetails.length; index++) {
                 //Thêm trường costDetail vào mỗi asset trong listAssets
                 me.listAssets[index].costDetail = licenseDetails[index].detail;
               }
               console.log("List Assets of License: ", me.listAssets);
-              // console.log(typeof(me.listAssets[0].costDetail)); //string
             })
             .catch(function (error) {
               console.log(error);
@@ -568,7 +563,6 @@ export default {
 
         //Call API lưu dữ liệu
         var me = this;
-        console.log(this.formMode, "formmode");
         //Nếu là sửa chứng từ
         if (this.formMode === Enums.FormMode.Edit) {
           axios
@@ -673,7 +667,6 @@ export default {
       this.selectedIndex = index;
       this.selectedAssetId = assetId;
       this.costDetail = costDetail;
-      console.log("mở form sửa chi tiết nguyên giá");
       this.showCostDetail = true;
     },
 
@@ -696,9 +689,7 @@ export default {
     btnCancelOnClick() {
       var me = this;
       const licenseInit = JSON.parse(JSON.stringify(me.licenseOrigin));
-      console.log(licenseInit, "license init");
       const licenseNow = JSON.parse(JSON.stringify(me.license));
-      console.log(licenseNow, "license now");
       //Emit event btnCancelOnClick cho component cha show popup
       if (me.formMode == Enums.FormMode.Edit) {
         if (me.compareTwoObject(licenseNow, licenseInit))

@@ -200,10 +200,8 @@ export default {
 
     //Xử lý các nguồn nguyên giá (tên-giá trị) từ trước để render ra form (khi ở form sửa)
     if (this.costDetail != null && this.costDetail != "") {
-      // console.log(this.costDetail + typeof(this.costDetail)); //string
       //JSON.parse là hàm chuyển đổi chuỗi JSON thành đối tượng trong JS
       this.listSource = JSON.parse(this.costDetail);
-      // console.log("listSource: ", this.listSource); //object
     } else {
       //Nếu không có chi tiết nguyên giá trước đó, thì khởi tạo mặc định
       this.listSource = [
@@ -230,7 +228,6 @@ export default {
           ///focus chuột vào ô input combobox
           //get thẻ input có valuename rỗng
           var inputs = document.querySelectorAll("input[valuename='']");
-          console.log(inputs);
           //focus vào thẻ input đầu tiên
           inputs[0].focus();
         }
@@ -240,7 +237,6 @@ export default {
         //Duyệt từ cuối mảng listSource về đầu mảng, nếu listSource.source đã tồn tại thì focus vào ô input đó
         for (var i = this.listSource.length - 1; i >= 0; i--) {
           for (var j = 0; j < this.listSource.length; j++) {
-            console.log(this.listSource[i].source, ' ', this.listSource[j].source);
             if (i != j && this.listSource[i].source == this.listSource[j].source) {
               //Lấy ô input cuối có tên nguồn nguyên giá trùng
               var inputs = document.querySelectorAll("input[valuename='" + this.listSource[j].source + "']");
@@ -257,6 +253,7 @@ export default {
       }
       //Pass validate
       if (valid) {
+        console.log(this.listSource, 'listSource');
         //JSON.stringify là hàm chuyển đổi đối tượng JS thành chuỗi JSON
         this.$emit(
           "saveCostDetail",
@@ -274,10 +271,6 @@ export default {
     sumValueOfCostSource() {
       var total = 0;
       for (var i = 0; i < this.listSource.length; i++) {
-        console.log(
-          this.listSource[i].value,
-          "value of listSource [" + i + "]"
-        );
         //remove . from string
         var value = this.listSource[i].value.toString().replace(/\./g, "");
         total += +value;
@@ -290,7 +283,6 @@ export default {
      * Created by: VDDong (11/05/2022)
      */
     itemOnClick(index, value) {
-      console.log(index, "index");
       console.log(value, "value");
       //Lấy text ở thanh input có attribute indexSpec là index
       //Đợi sau 0,5 giây rồi mới cập nhật giá trị (tránh lỗi bất động bộ khi element combobox chưa kịp cập nhật attribute valueName)
@@ -298,7 +290,6 @@ export default {
         var costsourceName = document
           .querySelectorAll(`[indexSpec="${index}"]`)[0]
           .getAttribute("valueName");
-        console.log(costsourceName, "costsourceName");
         //Cập nhật giá trị listSource[index].source theo giá trị ở thanh input
         this.listSource[index].source = costsourceName;
       }, 500);

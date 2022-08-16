@@ -394,24 +394,29 @@ export default {
     /**
      * Tích chọn checkbox chọn tất cả
      * Có thể ctrl chọn nhiều rồi sang trang khác chọn thì vẫn lưu các bản ghi đã tích chọn trước đó
-     * (Chưa hiểu code này, hình như bug chọn hết rồi đổi trang bị lộn xộn là tại đây)
      * Created by: VDDong (11/08/2022)
      */
     toggleSelectAll() {
+      var me = this;
       this.selectAll = !this.selectAll;
       //Cập nhật số dòng được chọn
       if (this.selectAll) this.countSelected = this.listAssets.length;
       else this.countSelected = 0;
       //Chọn tất cả các dòng
-      this.listAssets.forEach((asset) => {
-        //? chưa hiểu đoạn này
-        const removeIndex = this.listAssets.findIndex(
-          (a) => a.assetCode === asset.assetCode
-        );
-        this.selectedAssets.splice(removeIndex, 1);
-        asset.selected = this.selectAll;
-        if (asset.selected) {
-          this.selectedAssets.push(asset);
+      me.listAssets.forEach((asset) => {
+        asset.selected = me.selectAll; //thuộc tính selected của asset được gán tùy theo giá trị của selectAll(true/false)
+        //Nếu selectedAll là true thì thêm asset vào selectedAsset, không thì xóa asset đó khỏi selectedAsset
+        if (me.selectAll) {
+          //Nếu asset chưa được chọn thì thêm vào selectedAsset
+          if (!me.selectedAssets.map((x) => x.assetId).includes(asset.assetId))
+            me.selectedAssets.push(asset);
+          // me.selectedAssets.push(asset);
+        } else {
+          me.selectedAssets = me.selectedAssets.filter(
+            (asset) => asset.assetId !== asset.assetId
+          );
+          //Còn bug là nếu bỏ checkbox all thì selectedAssets sẽ bị xóa cả những bản ghi của trang khác, vì thế khi bỏ checkbox all
+          //thì chỉ xóa những bản ghi của trang hiện tại thôi
         }
       });
     },
