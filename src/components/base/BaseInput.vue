@@ -306,7 +306,7 @@ export default {
     onEnter() {
       if (this.fieldName == "searchAssets") {
         //Lấy giá trị từ ô input
-        let value = document.getElementsByClassName("m-input-search-assets")[0].value;
+        let value = document.getElementsByClassName("m-input-search-assets")[document.getElementsByClassName("m-input-search-assets").length - 1].value;
         this.$emit("searching", value);
       }
       if (this.fieldName == "searchLicenses") {

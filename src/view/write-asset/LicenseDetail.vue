@@ -489,6 +489,9 @@ export default {
   methods: {
     /**
      * Lấy thông tin các tài sản theo chứng từ
+     * listAssets lấy ở một API khác, licenseDetails lấy ở một API khác nên để listAssets[index] đi đúng với licenseDetails[index]
+     * thì ở backend 2 API cần có câu truy vấn oder by theo giống 1 kiểu (ở đây đang là oder by AssetId)
+     * (Backend 2 API viết ở hàm GetByLicenseId vs GetFilterByLicenseId(AssetRepository) và GetByLicenseId(LicenseDetailRepository))
      * Created by: VDDong (15/08/2022)
      */
     getListAssetsByLicenseId() {
