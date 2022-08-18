@@ -527,7 +527,6 @@ export default {
                 //Thêm trường costDetail vào mỗi asset trong listAssets
                 me.listAssets[index].costDetail = licenseDetails[index].detail;
               }
-              console.log("List Assets of License: ", me.listAssets);
             })
             .catch(function (error) {
               console.log(error);
@@ -565,7 +564,6 @@ export default {
           });
           this.license.totalCost += asset.cost; //Tổng nguyên giá = Tổng (giá các tài sản)
         });
-        console.log("license before send to server: ", this.license);
 
         //Call API lưu dữ liệu
         var me = this;
@@ -725,7 +723,6 @@ export default {
      */
     saveCostDetail(costDetail, index) {
       this.listAssets[index].costDetail = costDetail;
-      console.log(this.listAssets, "list Assets after save cost detail");
     },
 
     /**

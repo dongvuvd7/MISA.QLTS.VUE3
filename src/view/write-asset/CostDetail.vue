@@ -264,7 +264,6 @@ export default {
       }
       //Pass validate
       if (valid) {
-        console.log(this.listSource, "listSource");
         //JSON.stringify là hàm chuyển đổi đối tượng JS thành chuỗi JSON
         this.$emit(
           "saveCostDetail",
@@ -294,7 +293,7 @@ export default {
      * Created by: VDDong (11/05/2022)
      */
     itemOnClick(index, value) {
-      console.log(value, "value");
+      console.log(value, 'value of combobox');
       //Lấy text ở thanh input có attribute indexSpec là index
       //Đợi sau 0,5 giây rồi mới cập nhật giá trị (tránh lỗi bất động bộ khi element combobox chưa kịp cập nhật attribute valueName)
       setTimeout(() => {
