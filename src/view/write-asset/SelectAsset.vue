@@ -46,7 +46,7 @@
                       @click="toggleSelectAll"
                     />
                   </th>
-                  <th style="width: 50px" class="text-center">STT</th>
+                  <th style="width: 50px" class="text-center" title="Số thứ tự">STT</th>
                   <th
                     style="min-width: 90px; max-width: 90px"
                     class="text-left"
@@ -100,9 +100,9 @@
                   <td class="text-center">
                     {{ (currentPage - 1) * pageSize + index + 1 }}
                   </td>
-                  <td class="text-left">{{ asset.assetCode }}</td>
-                  <td class="text-left">{{ asset.assetName }}</td>
-                  <td class="text-left" style="max-width: 170px">
+                  <td class="text-left" :title="asset.assetCode">{{ asset.assetCode }}</td>
+                  <td class="text-left" :title="asset.assetName">{{ asset.assetName }}</td>
+                  <td class="text-left" style="max-width: 170px" :title="asset.departmentName">
                     {{ asset.departmentName }}
                   </td>
                   <td class="text-right">

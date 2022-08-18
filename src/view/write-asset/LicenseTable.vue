@@ -51,7 +51,7 @@
                   @click="toggleSelectAll"
                 />
               </th>
-              <th style="width: 50px" class="text-center">STT</th>
+              <th style="width: 50px" class="text-center" title="Số thứ tự">STT</th>
               <th style="width: 90px" class="text-left">Số chứng từ</th>
               <th style="width: 150px">Ngày chứng từ</th>
               <th style="width: 150px">Ngày ghi tăng</th>
@@ -89,7 +89,7 @@
               <td class="text-right" style="width: 150px">
                 {{ formatNumber(license.totalCost) }}
               </td>
-              <td class="text-left">{{ license.note }}</td>
+              <td class="text-left" :title="license.note">{{ license.note }}</td>
               <td class="text-center" style="width: 100px; overflow: visible">
                 <div class="function-container">
                   <div
@@ -195,7 +195,7 @@
           <!-- Table header -->
           <thead>
             <tr>
-              <th style="width: 50px" class="text-center">STT</th>
+              <th style="width: 50px" class="text-center" title="Số thứ tự">STT</th>
               <th style="min-width: 90px; max-width: 90px" class="text-left">
                 Mã tài sản
               </th>
@@ -224,12 +224,12 @@
               <td class="text-center">
                 {{ index + 1 }}
               </td>
-              <td class="text-left">{{ asset.assetCode }}</td>
-              <td class="text-left">{{ asset.assetName }}</td>
-              <td class="text-left" style="max-width: 170px">
+              <td class="text-left" :title="asset.assetCode">{{ asset.assetCode }}</td>
+              <td class="text-left" :title="asset.assetName">{{ asset.assetName }}</td>
+              <td class="text-left" style="max-width: 170px" :title="asset.assetCategoryName">
                 {{ asset.assetCategoryName }}
               </td>
-              <td class="text-left" style="max-width: 170px">
+              <td class="text-left" style="max-width: 170px" :title="asset.departmentName">
                 {{ asset.departmentName }}
               </td>
               <td class="text-right">{{ asset.quantity }}</td>

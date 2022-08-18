@@ -128,7 +128,7 @@
                   <!-- thead -->
                   <thead>
                     <tr>
-                      <th style="width: 50px" class="text-center">STT</th>
+                      <th style="width: 50px" class="text-center" title="Số thứ tự">STT</th>
                       <th
                         style="min-width: 90px; max-width: 90px"
                         class="text-left"
@@ -221,13 +221,13 @@
                       v-if="listAssets.length > 0"
                     >
                       <td class="text-left" colspan="4"></td>
-                      <td class="text-right bold">
+                      <td class="text-right bold" title="Tổng nguyên giá">
                         {{ formatNumber(sum("cost")) }}
                       </td>
-                      <td class="text-right bold">
+                      <td class="text-right bold" title="Tổng hao mòn năm">
                         {{ formatNumber(sum("accumulatedDepreciation")) }}
                       </td>
-                      <td class="text-right bold">
+                      <td class="text-right bold" title="Tổng giá trị còn lại">
                         {{ formatNumber(sum("remainingValue")) }}
                       </td>
                       <td></td>
@@ -242,7 +242,8 @@
                           <!-- Tổng số bản ghi -->
                           <div class="total-record">
                             <span>Tổng số: </span>
-                            <span class="bold">{{ totalRowsListAsset }}</span>
+                            <span class="bold" v-if="formMode == 'edit'">{{ totalRowsListAsset }}</span>
+                            <span class="bold" v-if="formMode == 'add'">{{ listAssets.length }}</span>
                             <span> bản ghi</span>
                           </div>
                           <!-- Kích thước trang -->
