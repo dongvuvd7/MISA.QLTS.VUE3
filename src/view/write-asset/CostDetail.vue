@@ -203,7 +203,11 @@ export default {
         console.log(error);
       });
 
-    //Xử lý các nguồn nguyên giá (tên-giá trị) từ trước để render ra form (khi ở form sửa)
+    /**
+     * Xử lý các nguồn nguyên giá (tên-giá trị) từ trước để render ra form (khi ở form sửa)
+     * (Phần này chạy trước rồi mới chạy đến 2 phần axios bên trên)
+     */
+
     if (this.costDetail != null && this.costDetail != "") {
       //JSON.parse là hàm chuyển đổi chuỗi JSON thành đối tượng trong JS
       this.listSource = JSON.parse(this.costDetail);
