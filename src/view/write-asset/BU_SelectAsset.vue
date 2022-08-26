@@ -307,21 +307,13 @@ export default {
             asset.remainingValue = asset.cost - asset.accumulatedDepreciation; //Giá trị còn lại
             asset.costDetail = ""; //Chi tiết nguyên giá
             me.listAssets.push(asset);
-            // //Tự tích checkbox những tài sản đã chọn (khi sửa chứng từ)
-            // if (
-            //   me.selectedAssets.filter((a) => a.assetCode === asset.assetCode)
-            //     .length > 0
-            // ) {
-            //   asset.selected = true;
-            // }
-
-            //Loại những tài sản đã chọn ra khỏi danh sách listAssets (khi sửa chứng từ)
-            me.selectedAssets.forEach((a) => {
-              if (a.assetCode === asset.assetCode) {
-                me.listAssets.splice(me.listAssets.indexOf(asset), 1);
-              }
-            });
-
+            //Tự tích checkbox những tài sản đã chọn (khi sửa chứng từ)
+            if (
+              me.selectedAssets.filter((a) => a.assetCode === asset.assetCode)
+                .length > 0
+            ) {
+              asset.selected = true;
+            }
           });
           me.totalRows = response.data.totalRecords; //Tổng số bản ghi
           me.totalPage = Math.ceil((1.0 * me.totalRows) / me.pageSize); //Tổng số trang

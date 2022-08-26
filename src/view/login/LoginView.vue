@@ -132,7 +132,7 @@ export default {
                 await this.login(user);
                 // if login success
                 if(store.getters.isWrongPass == false){
-                    this.$router.push("/asset");
+                    this.$router.push("/write-asset");
                 }
                 //false account
                 else{
